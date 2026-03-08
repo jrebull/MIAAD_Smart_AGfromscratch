@@ -1,203 +1,347 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,letterpaper]{article}
 
-% -- Packages --
+% --- 1. CONFIGURACIÓN DE IDIOMA Y CARACTERES ---
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
-\usepackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-nodecimaldot, es-noquoting]{babel}
+\usepackage{csquotes}
+\usepackage{mathpazo}          % Palatino para texto y matemáticas
+\usepackage{microtype}
+
+% --- 2. GEOMETRÍA ---
+\usepackage[margin=2.5cm, headheight=14pt]{geometry}
+
+% --- 3. MATEMÁTICAS ---
 \usepackage{amsmath,amssymb}
+
+% --- 4. TABLAS Y GRÁFICOS ---
 \usepackage{booktabs}
-\usepackage{float}
-\usepackage{hyperref}
+\usepackage{array}
+\usepackage{colortbl}
 \usepackage{xcolor}
-\usepackage{tabularx}
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{float}
 \usepackage{wrapfig}
+
+% --- 5. CAJAS Y ENTORNOS ---
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% --- 6. ENCABEZADOS Y PIES ---
 \usepackage{fancyhdr}
-\usepackage{lastpage}
-
-% -- Colors --
-\definecolor{uacjblue}{HTML}{003CA6}
-\definecolor{uacjyellow}{HTML}{FFD600}
-\definecolor{darkgray}{HTML}{2C3E50}
-
-\hypersetup{
-    colorlinks=true,
-    linkcolor=uacjblue,
-    urlcolor=uacjblue,
-    citecolor=uacjblue,
-}
-
-% -- Header/Footer --
 \pagestyle{fancy}
 \fancyhf{}
-\rhead{\small Optimización Inteligente — MIAAD UACJ}
-\lhead{\small Javier Augusto Rebull Saucedo}
-\rfoot{\small Página \thepage\ de \pageref{LastPage}}
+\fancyhead[L]{\small\textsc{Optimización Inteligente}}
+\fancyhead[R]{\small\textsc{MIAAD -- UACJ}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
 
+% --- 7. HIPERVÍNCULOS ---
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black, citecolor=blue!60!black}
+
+% --- 8. COLORES PERSONALIZADOS ---
+\definecolor{headerblue}{HTML}{003CA6}
+\definecolor{uacjyellow}{HTML}{FFD600}
+\definecolor{sectiongreen}{HTML}{27AE60}
+\definecolor{formulabg}{HTML}{F1F8E9}
+\definecolor{formulaborder}{HTML}{DCEDC8}
+\definecolor{restrictionbg}{HTML}{FFF3E0}
+\definecolor{restrictionborder}{HTML}{FF9800}
+\definecolor{deliverbg}{HTML}{E3F2FD}
+\definecolor{tablehead}{HTML}{2C3E50}
+\definecolor{uacjgray}{HTML}{555559}
+\definecolor{alertred}{HTML}{E74C3C}
+
+% --- 9. CAJAS TCOLORBOX ---
+\newtcolorbox{formulabox}{
+    colback=formulabg,
+    colframe=formulaborder,
+    arc=4pt,
+    boxrule=0.8pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt
+}
+
+\newtcolorbox{restrictionbox}{
+    colback=restrictionbg,
+    colframe=restrictionborder,
+    borderline west={3pt}{0pt}{restrictionborder},
+    arc=2pt,
+    boxrule=0.5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt
+}
+
+\newtcolorbox{notebox}[1][]{
+    colback=deliverbg,
+    colframe=headerblue!40,
+    borderline west={4pt}{0pt}{headerblue},
+    arc=2pt,
+    boxrule=0.5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    #1
+}
+
+\newtcolorbox{resultbox}[1][]{
+    colback=formulabg,
+    colframe=sectiongreen!60,
+    borderline west={4pt}{0pt}{sectiongreen},
+    arc=2pt,
+    boxrule=0.5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    #1
+}
+
+\newtcolorbox{yellowbox}[1][]{
+    colback=uacjyellow!10,
+    colframe=uacjyellow!50,
+    borderline west={4pt}{0pt}{uacjyellow},
+    arc=2pt,
+    boxrule=0.5pt,
+    left=10pt, right=10pt, top=8pt, bottom=8pt,
+    #1
+}
+
+% --- 10. SECCIONES CON LÍNEA DORADA ---
+\usepackage{titlesec}
+\titleformat{\section}
+    {\Large\bfseries\color{headerblue}}
+    {\thesection.}{0.5em}{}
+    [\vspace{-0.5em}{\color{uacjyellow}\rule{5pt}{0pt}\rule[0.3ex]{0.4\linewidth}{2pt}}]
+
+\titleformat{\subsection}
+    {\large\bfseries\color{headerblue}}
+    {\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{headerblue!80}}
+    {\thesubsubsection.}{0.5em}{}
+
+% ==========================================================
 \begin{document}
 
-% ============================================================
-% COVER PAGE
-% ============================================================
-\begin{titlepage}
-\centering
-\vspace*{1cm}
+% ==========================================
+% ENCABEZADO COMPACTO PERSONALIZADO
+% ==========================================
+\begingroup
+\setlength{\parindent}{0pt}%
+\hyphenpenalty=10000\exhyphenpenalty=10000\relax
 
-% Uncomment and adjust path when logo is available:
-% \includegraphics[width=0.35\textwidth]{LogoSInFondoMIAAD.png}\\[1.5cm]
+\vspace*{-1cm}
+\noindent
+\begin{minipage}[c]{2.5cm}
+    \includegraphics[width=2.5cm]{LogoSInFondoMIAAD.png}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{\dimexpr\textwidth-5.2cm\relax}
+    \centering
+    {\Large\bfseries\scshape Universidad Autónoma de Ciudad Juárez}\\[2pt]
+    {\normalsize Maestría en Inteligencia Artificial y Analítica de Datos}\\[2pt]
+    {\small Optimización Inteligente \textcolor{uacjgray}{\textbullet} Mtro.~Raúl Gibrán Porras Alaniz}\\[8pt]
+    {\LARGE\bfseries Análisis de Rendimiento de un}\\[2pt]
+    {\Large\bfseries Algoritmo Genético para el VRP}\\[8pt]
+    {\large\bfseries Javier Augusto Rebull Saucedo}\\[2pt]
+    {\normalsize Matrícula: 263483 \textcolor{uacjgray}{\textbullet} Marzo de 2026}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{2.5cm}\hfill\end{minipage}
+\vspace{0.8em}
+{\color{uacjgray}\hrule height 0.8pt}
+\vspace{1em}
+\endgroup
 
-{\Large\textbf{Universidad Autónoma de Ciudad Juárez}}\\[0.3cm]
-{\large Maestría en Inteligencia Artificial y Analítica de Datos (MIAAD)}\\[1.5cm]
+% ==========================================
+% ENLACE AL REPOSITORIO
+% ==========================================
+\begin{notebox}
+\textbf{Repositorio del proyecto (GitHub):}\\[4pt]
+\small\url{https://github.com/jrebull/MIAAD_Smart_AGfromscratch}\\[4pt]
+\normalsize Contiene el código fuente completo (OOP), los datos generados, los resultados de las 150 ejecuciones, las 7 figuras y el dashboard interactivo en Streamlit.
+\end{notebox}
 
-{\large\textbf{Materia:} Optimización Inteligente}\\[0.3cm]
-{\large\textbf{Profesor:} Mtro. Raúl Gibrán Porras Alaniz}\\[1.5cm]
-
-{\LARGE\color{uacjblue}\textbf{Análisis de Rendimiento de un\\Algoritmo Genético para el VRP}}\\[2cm]
-
-{\large\textbf{Alumno:} Javier Augusto Rebull Saucedo}\\[0.3cm]
-{\large\textbf{Matrícula:} 263483}\\[1.5cm]
-
-{\large\textbf{Fecha de entrega:} 08 de marzo de 2026}
-
-\vfill
-\end{titlepage}
-
-% ============================================================
-% 1. INTRODUCCIÓN
-% ============================================================
+% ==========================================================
 \section{Introducción}
 
 El Problema de Ruteo de Vehículos (\textit{Vehicle Routing Problem}, VRP) es uno de los problemas de optimización combinatoria más estudiados en la investigación de operaciones y la logística computacional. Propuesto originalmente por Dantzig y Ramser en 1959 \cite{dantzig1959}, el VRP busca determinar el conjunto óptimo de rutas que una flota de vehículos debe seguir para atender a un conjunto de clientes dispersos geográficamente, partiendo y regresando a un depósito central.
 
 En su variante capacitada (CVRP), cada vehículo tiene una capacidad máxima $Q$ que no puede ser excedida, lo que añade una restricción fundamental que convierte al problema en NP-hard \cite{toth2002}. Debido a la explosión combinatoria del espacio de soluciones, los métodos exactos resultan imprácticos para instancias de tamaño real, haciendo indispensable el uso de metaheurísticas \cite{vidal2020}.
 
-Los Algoritmos Genéticos (AG), propuestos por Holland \cite{holland1975} y popularizados por Goldberg \cite{goldberg1989}, son metaheurísticas evolutivas que simulan el proceso de selección natural para explorar eficientemente el espacio de soluciones. En este trabajo, se implementa un AG desde cero para resolver instancias del CVRP con una función objetivo que maximiza la ganancia neta, y se evalúa su rendimiento bajo cinco escenarios experimentales distintos con 30 ejecuciones independientes cada uno.
+Los Algoritmos Genéticos (AG), propuestos por Holland \cite{holland1975} y popularizados por Goldberg \cite{goldberg1989}, son metaheurísticas evolutivas que simulan el proceso de selección natural para explorar eficientemente el espacio de soluciones. En este trabajo, se implementa un AG desde cero para resolver instancias del CVRP con una función objetivo que maximiza la ganancia neta, y se evalúa su rendimiento bajo cinco escenarios experimentales distintos con 30 ejecuciones independientes cada uno \cite{porras2026}.
 
-% ============================================================
-% 2. MARCO TEÓRICO
-% ============================================================
+% ==========================================================
 \section{Marco Teórico}
 
 \subsection{Formulación Matemática}
 
-La formulación utilizada busca \textbf{maximizar la ganancia neta} $Z$, definida como:
+La formulación utilizada busca \textbf{maximizar la ganancia neta} $Z$, definida como la diferencia entre los ingresos totales por entrega y los costos operativos:
 
+\begin{formulabox}
 \begin{equation}
 Z = \sum_{i=1}^{n}(D_i \times V_i) - \left[(N_{veh} \times C_{veh}) + (Dist_{total} \times C_{dist}) + (Vacío_{total} \times C_{vacío})\right]
 \label{eq:fitness}
 \end{equation}
+\end{formulabox}
 
-donde:
-\begin{itemize}
-    \item $D_i$: demanda (unidades) del cliente $i$
-    \item $V_i$: ingreso por unidad del cliente $i$
-    \item $N_{veh}$: número de vehículos utilizados
-    \item $C_{veh}$: costo fijo por vehículo (\$300 base)
-    \item $Dist_{total}$: distancia euclidiana total recorrida
-    \item $C_{dist}$: costo por kilómetro (\$2 base)
-    \item $Vacío_{total}$: capacidad no utilizada total
-    \item $C_{vacío}$: penalización por unidad vacía (\$10 base)
-    \item $Q$: capacidad del vehículo (30 unidades base)
-\end{itemize}
+\noindent La Tabla~\ref{tab:symbols} describe cada componente de la función objetivo junto con sus valores base.
+
+\begin{table}[H]
+\centering
+\caption{Componentes de la función objetivo y valores base.}
+\label{tab:symbols}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{>{\centering\arraybackslash}m{2cm}
+                >{\arraybackslash}m{7.5cm}
+                >{\centering\arraybackslash}m{3.5cm}}
+    \toprule
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Símbolo}} &
+    \textcolor{white}{\textbf{Descripción}} &
+    \textcolor{white}{\textbf{Valor base}} \\
+    \midrule
+    $D_i$              & Demanda (unidades) del cliente $i$       & aleatorio $\in [5, 15]$ \\
+    \rowcolor{gray!8}
+    $V_i$              & Ingreso por unidad del cliente $i$       & aleatorio $\in [50, 300]$ \\
+    $N_{veh}$          & Número de vehículos utilizados           & endógeno \\
+    \rowcolor{gray!8}
+    $C_{veh}$          & Costo fijo por vehículo                  & \$300 \\
+    $Dist_{total}$     & Distancia euclidiana total recorrida     & endógeno \\
+    \rowcolor{gray!8}
+    $C_{dist}$         & Costo por kilómetro                      & \$2 \\
+    $Vacío_{total}$    & Capacidad no utilizada total              & endógeno \\
+    \rowcolor{gray!8}
+    $C_{vacío}$        & Penalización por unidad vacía             & \$10 \\
+    $Q$                & Capacidad del vehículo                    & 30 unidades \\
+    \bottomrule
+\end{tabular}
+\end{table}
 
 La distancia euclidiana entre dos nodos se calcula como:
 
+\begin{formulabox}
 \begin{equation}
 d(c_1, c_2) = \sqrt{(x_{c_2} - x_{c_1})^2 + (y_{c_2} - y_{c_1})^2}
 \label{eq:distance}
 \end{equation}
+\end{formulabox}
 
 \subsection{Representación Cromosómica}
 
-Cada individuo es una \textbf{permutación} de los identificadores de clientes. El decodificador lee de izquierda a derecha asignando clientes al vehículo actual hasta que la carga exceda $Q$, momento en el cual se inicia un nuevo vehículo.
+Cada individuo es una \textbf{permutación} de los identificadores de clientes. El decodificador lee de izquierda a derecha asignando clientes al vehículo actual hasta que la carga exceda $Q$, momento en el cual se cierra la ruta y se inicia un nuevo vehículo.
 
-\begin{center}
-\texttt{Cromosoma: [3, 1, 5, 2, 4]}
-\end{center}
+\begin{notebox}
+\textbf{Ejemplo para 5 clientes:} \texttt{Cromosoma = [3, 1, 5, 2, 4]}\\[4pt]
+Si $Q = 10$ y las demandas son $D_3=4, D_1=3, D_5=5, D_2=6, D_4=3$:\\
+Ruta 1: $[3, 1] \rightarrow$ carga = 7 \quad|\quad Ruta 2: $[5] \rightarrow$ carga = 5 \quad|\quad Ruta 3: $[2, 4] \rightarrow$ carga = 9
+\end{notebox}
 
 \subsection{Operadores Genéticos}
 
 \subsubsection{Selección por Torneo}
-Se muestrean $k=3$ individuos aleatorios de la población y se selecciona al de mayor fitness.
+Se muestrean $k=3$ individuos aleatorios de la población y se selecciona al de mayor fitness. Este método ofrece presión selectiva controlable sin requerir ordenamiento completo de la población.
 
 \subsubsection{Cruce OX1 (Order Crossover)}
 Propuesto por Davis (1985) \cite{davis1985}, el OX1 preserva el orden relativo de sub-secuencias sin duplicar genes:
+
+\begin{restrictionbox}
 \begin{enumerate}
-    \item Se selecciona un segmento aleatorio del Padre 1 y se copia al hijo.
-    \item Se llenan las posiciones restantes con genes del Padre 2 en su orden original, omitiendo los ya presentes.
+    \item Se selecciona un segmento aleatorio del Padre 1 y se copia al hijo en las mismas posiciones.
+    \item Se llenan las posiciones restantes (de izquierda a derecha) con genes del Padre 2 en su orden original, omitiendo los ya presentes en el segmento copiado.
 \end{enumerate}
+\end{restrictionbox}
 
 \subsubsection{Mutación por Intercambio}
-Con probabilidad $p_m$, se seleccionan dos posiciones al azar y se intercambian sus valores.
+Con probabilidad $p_m = 0.15$, se seleccionan dos posiciones al azar y se intercambian sus valores, introduciendo diversidad genética controlada.
 
 \subsubsection{Elitismo}
-El mejor individuo de la generación $t$ sobrevive intacto a la generación $t+1$.
+El mejor individuo de la generación $t$ sobrevive intacto a la generación $t+1$, garantizando que la calidad de la mejor solución nunca se deteriore.
 
-% ============================================================
-% 3. DISEÑO EXPERIMENTAL
-% ============================================================
+% ==========================================================
 \section{Diseño Experimental}
 
 \subsection{Parámetros del Algoritmo Genético}
 
-Los parámetros base del AG se mantuvieron constantes en todos los escenarios:
+Los hiperparámetros del AG se mantuvieron constantes en todos los escenarios:
 
 \begin{table}[H]
 \centering
-\caption{Parámetros base del Algoritmo Genético}
-\begin{tabular}{lc}
-\toprule
-\textbf{Parámetro} & \textbf{Valor} \\
-\midrule
-Tamaño de población & 100 \\
-Generaciones & 300 \\
-Tasa de mutación & 0.15 \\
-Tamaño de torneo ($k$) & 3 \\
-Ejecuciones independientes & 30 \\
-\bottomrule
-\end{tabular}
+\caption{Configuración de hiperparámetros del AG.}
 \label{tab:ga_params}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+    \toprule
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Componente}} &
+    \textcolor{white}{\textbf{Método}} &
+    \textcolor{white}{\textbf{Parámetros}} \\
+    \midrule
+    Representación    & Permutación de IDs de clientes & $n$ genes \\
+    \rowcolor{gray!8}
+    Población         & Inicialización aleatoria       & 100 individuos \\
+    Generaciones      & Ciclo evolutivo completo       & 300 \\
+    \rowcolor{gray!8}
+    Selección         & Torneo determinístico          & $k = 3$ \\
+    Cruza             & Order Crossover (OX1)          & Davis, 1985 \\
+    \rowcolor{gray!8}
+    Mutación          & Intercambio (swap)             & $p_m = 0.15$ \\
+    Elitismo          & Preservación del mejor         & 1 elite \\
+    \rowcolor{gray!8}
+    Ejecuciones       & Independientes por escenario   & 30 (seeds 0--29) \\
+    \bottomrule
+\end{tabular}
 \end{table}
 
 \subsection{Escenarios Experimentales}
 
-Se diseñaron cinco escenarios para evaluar el rendimiento del AG bajo diferentes condiciones:
+Se diseñaron cinco escenarios para evaluar el rendimiento del AG bajo diferentes condiciones de escalabilidad, variabilidad económica y estrés operativo:
 
 \begin{table}[H]
 \centering
-\caption{Configuración de los 5 escenarios experimentales}
+\caption{Configuración de los 5 escenarios experimentales.}
+\label{tab:scenarios}
+\renewcommand{\arraystretch}{1.3}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{lccccccc}
-\toprule
-\textbf{Escenario} & \textbf{Clientes} & \textbf{Demanda} & \textbf{Valor} & \textbf{Q} & \textbf{$C_{veh}$} & \textbf{$C_{dist}$} & \textbf{$C_{vacío}$} \\
-\midrule
-1 — Escalabilidad Media     & 100 & [5, 15] & [50, 300]   & 30 & 300 & 2 & 10 \\
-2 — Alta Escalabilidad      & 200 & [5, 15] & [50, 300]   & 30 & 300 & 2 & 10 \\
-3 — Variabilidad Económica  & 100 & [1, 8]  & [150, 600]  & 30 & 300 & 2 & 10 \\
-4 — Estrés: Penalizaciones  & 100 & [5, 15] & [50, 300]   & 20 & 500 & 5 & 15 \\
-5 — Estrés: Cap. Ampliada   & 100 & [5, 15] & [50, 300]   & 50 & 150 & 1 & 5  \\
-\bottomrule
+    \toprule
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Escenario}} &
+    \textcolor{white}{\textbf{Clientes}} &
+    \textcolor{white}{\textbf{Demanda}} &
+    \textcolor{white}{\textbf{Valor}} &
+    \textcolor{white}{\textbf{Q}} &
+    \textcolor{white}{\textbf{$C_{veh}$}} &
+    \textcolor{white}{\textbf{$C_{dist}$}} &
+    \textcolor{white}{\textbf{$C_{vacío}$}} \\
+    \midrule
+    1 — Escalabilidad Media     & 100 & [5, 15] & [50, 300]   & 30 & \$300 & \$2 & \$10 \\
+    \rowcolor{gray!8}
+    2 — Alta Escalabilidad      & 200 & [5, 15] & [50, 300]   & 30 & \$300 & \$2 & \$10 \\
+    3 — Variabilidad Económica  & 100 & [1, 8]  & [150, 600]  & 30 & \$300 & \$2 & \$10 \\
+    \rowcolor{gray!8}
+    4 — Estrés: Penalizaciones  & 100 & [5, 15] & [50, 300]   & 20 & \$500 & \$5 & \$15 \\
+    5 — Estrés: Cap.\ Ampliada  & 100 & [5, 15] & [50, 300]   & 50 & \$150 & \$1 & \$5  \\
+    \bottomrule
 \end{tabular}
 }
-\label{tab:scenarios}
 \end{table}
 
-\subsubsection{Justificación del Escenario 3}
-Simula un mercado de bienes de lujo donde cada entrega es pequeña en volumen pero alta en valor unitario (demanda $\in [1, 8]$, valor $\in [150, 600]$). Esto obliga al AG a balancear la eficiencia de rutas contra la captura de ingresos premium.
+\subsubsection{Justificación del Escenario 3 — Variabilidad Económica}
 
-\subsubsection{Justificación del Escenario 4}
-Modela una operación con vehículos especializados costosos (refrigerados, materiales peligrosos) donde la estructura de costos penaliza severamente las rutas ineficientes: capacidad reducida ($Q=20$), costo por vehículo elevado (\$500), alto costo por kilómetro (\$5) y penalización por espacio vacío (\$15).
+\begin{yellowbox}
+Simula un \textbf{mercado de bienes de lujo} donde cada entrega es pequeña en volumen pero alta en valor unitario (demanda $\in [1, 8]$, valor $\in [150, 600]$). Esto obliga al AG a balancear la eficiencia de rutas contra la captura de ingresos premium. La menor demanda por cliente permite más clientes por vehículo, reduciendo el número de vehículos.
+\end{yellowbox}
 
-\subsubsection{Justificación del Escenario 5}
-Representa distribución masiva con vehículos de gran capacidad ($Q=50$) en un área urbana densa, con costos operativos reducidos ($C_{veh}=\$150$, $C_{dist}=\$1$, $C_{vacío}=\$5$), permitiendo al AG consolidar rutas con mayor libertad.
+\subsubsection{Justificación del Escenario 4 — Penalizaciones Altas}
 
-% ============================================================
-% 4. RESULTADOS
-% ============================================================
+\begin{yellowbox}
+Modela una operación con \textbf{vehículos especializados costosos} (refrigerados, materiales peligrosos) donde la estructura de costos penaliza severamente las rutas ineficientes: capacidad reducida ($Q=20$), costo por vehículo elevado (\$500), alto costo por kilómetro (\$5) y penalización por espacio vacío (\$15).
+\end{yellowbox}
+
+\subsubsection{Justificación del Escenario 5 — Capacidad Ampliada}
+
+\begin{yellowbox}
+Representa \textbf{distribución masiva con vehículos de gran capacidad} ($Q=50$) en un área urbana densa, con costos operativos reducidos ($C_{veh}=\$150$, $C_{dist}=\$1$, $C_{vacío}=\$5$), permitiendo al AG consolidar rutas con mayor libertad y menor penalización por subutilización.
+\end{yellowbox}
+
+% ==========================================================
 \section{Resultados}
 
 \subsection{Métricas de Rendimiento}
@@ -206,127 +350,164 @@ La Tabla~\ref{tab:results} presenta las cuatro métricas de rendimiento exigidas
 
 \begin{table}[H]
 \centering
-\caption{Métricas de rendimiento por escenario (30 ejecuciones)}
+\caption{Métricas de rendimiento por escenario (30 ejecuciones independientes).}
+\label{tab:results}
+\renewcommand{\arraystretch}{1.3}
 \resizebox{\textwidth}{!}{
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Escenario} & \textbf{Clientes} & \textbf{BKS (\$)} & \textbf{Promedio (\$)} & \textbf{Gap (\%)} & \textbf{Éxito (\%)} & \textbf{Desv. Est. (\$)} \\
-\midrule
-1 — Escalabilidad Media     & 100 & --- & --- & --- & --- & --- \\
-2 — Alta Escalabilidad      & 200 & --- & --- & --- & --- & --- \\
-3 — Variabilidad Económica  & 100 & --- & --- & --- & --- & --- \\
-4 — Estrés: Penalizaciones  & 100 & --- & --- & --- & --- & --- \\
-5 — Estrés: Cap. Ampliada   & 100 & --- & --- & --- & --- & --- \\
-\bottomrule
+\begin{tabular}{lcrrrrc}
+    \toprule
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Escenario}} &
+    \textcolor{white}{\textbf{Clientes}} &
+    \textcolor{white}{\textbf{BKS (\$)}} &
+    \textcolor{white}{\textbf{Promedio (\$)}} &
+    \textcolor{white}{\textbf{Gap (\%)}} &
+    \textcolor{white}{\textbf{Éxito (\%)}} &
+    \textcolor{white}{\textbf{Desv.\ Est.\ (\$)}} \\
+    \midrule
+    1 — Escalabilidad Media     & 100 & 143,721 & 143,177 & 0.38 & 100.0 & --- \\
+    \rowcolor{gray!8}
+    2 — Alta Escalabilidad      & 200 & 294,349 & 293,541 & 0.27 & 100.0 & --- \\
+    3 — Variabilidad Económica  & 100 & 135,771 & 135,321 & 0.33 & 100.0 & --- \\
+    \rowcolor{gray!8}
+    4 — Estrés: Penalizaciones  & 100 & 109,465 & 108,090 & 1.26 & 93.3  & --- \\
+    5 — Estrés: Cap.\ Ampliada  & 100 & 156,445 & 156,184 & 0.17 & 100.0 & --- \\
+    \bottomrule
 \end{tabular}
 }
-\label{tab:results}
 \end{table}
 
-\textit{Nota: Los valores exactos serán completados tras la ejecución del experimento con} \texttt{python run\_experiments.py --full}.
+\begin{resultbox}
+\textbf{Observaciones clave:}
+\begin{itemize}
+    \item El Escenario 5 (capacidad ampliada) alcanzó el \textbf{menor gap} (0.17\%) y la mayor consistencia, confirmando que costos operativos bajos facilitan la convergencia.
+    \item El Escenario 4 (penalizaciones altas) fue el más desafiante, con un gap de 1.26\% y tasa de éxito de 93.3\%, evidenciando que la estructura de costos restrictiva dificulta la optimización.
+    \item Todos los escenarios excepto el 4 alcanzaron una tasa de éxito del 100\% con tolerancia del 2\%.
+\end{itemize}
+\end{resultbox}
 
 \subsection{Curva de Convergencia}
 
-La Figura~\ref{fig:convergence} muestra la evolución del mejor fitness a lo largo de las 300 generaciones para la mejor ejecución del Escenario 1.
+La Figura~\ref{fig:convergence} muestra la evolución del mejor fitness a lo largo de las 300 generaciones para la mejor ejecución del Escenario 1. Se observa una convergencia rápida en las primeras 50 generaciones, seguida de un refinamiento gradual.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig01_convergencia_base.png}
-\caption{Curva de convergencia — Escenario 1 (100 clientes)}
-\label{fig:convergence}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig01_convergencia_base.png}
+    \caption{Curva de convergencia — Escenario 1 (100 clientes). La zona sombreada destaca la mejora acumulada. La convergencia principal ocurre antes de la generación 100.}
+    \label{fig:convergence}
 \end{figure}
 
 \subsection{Distribución de Resultados}
 
-La Figura~\ref{fig:boxplot} presenta la distribución de los mejores valores de fitness obtenidos en cada escenario.
+La Figura~\ref{fig:boxplot} presenta la distribución de los mejores valores de fitness obtenidos en cada escenario, permitiendo visualizar la dispersión y los valores atípicos.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig02_boxplot_escenarios.png}
-\caption{Box plot de distribución de fitness por escenario}
-\label{fig:boxplot}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig02_boxplot_escenarios.png}
+    \caption{Distribución de fitness por escenario (30 ejecuciones). La baja dispersión en los escenarios 1, 3 y 5 indica alta consistencia del AG.}
+    \label{fig:boxplot}
 \end{figure}
 
 \subsection{Comparativa BKS vs Promedio}
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig03_barras_metricas.png}
-\caption{BKS vs Promedio de Mejor Fitness por escenario}
-\label{fig:barras}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig03_barras_metricas.png}
+    \caption{BKS vs Promedio de Mejor Fitness por escenario. La cercanía entre ambas barras indica baja variabilidad entre ejecuciones.}
+    \label{fig:barras}
 \end{figure}
 
 \subsection{Gap y Tasa de Éxito}
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig04_gap_success.png}
-\caption{Brecha (Gap) y Tasa de Éxito por escenario}
-\label{fig:gap}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig04_gap_success.png}
+    \caption{Brecha (Gap \%) y Tasa de Éxito (\%) por escenario. El Escenario 4 presenta el mayor gap y la menor tasa de éxito.}
+    \label{fig:gap}
 \end{figure}
 
 \subsection{Mapa de Rutas Óptimas}
 
+La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escenario 1, mostrando las rutas asignadas a cada vehículo partiendo y regresando al depósito central (estrella roja).
+
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig05_ruta_optima.png}
-\caption{Rutas óptimas encontradas — Escenario 1}
-\label{fig:routes}
+    \centering
+    \includegraphics[width=0.85\textwidth]{Figures/fig05_ruta_optima.png}
+    \caption{Mapa de rutas óptimas — Escenario 1. Cada color representa un vehículo diferente. El depósito se ubica en el centro del área de servicio.}
+    \label{fig:routes}
 \end{figure}
 
 \subsection{Análisis de Sensibilidad}
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig06_heatmap_params.png}
-\caption{Heatmap de sensibilidad: configuración de costos vs fitness}
-\label{fig:heatmap}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig06_heatmap_params.png}
+    \caption{Heatmap de sensibilidad: configuración de costos vs fitness para los escenarios base (1), restrictivo (4) y relajado (5).}
+    \label{fig:heatmap}
 \end{figure}
 
 \subsection{Escalabilidad}
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.85\textwidth]{../Figures/fig07_escalabilidad.png}
-\caption{Comparación de escalabilidad: 100 vs 200 clientes}
-\label{fig:scalability}
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig07_escalabilidad.png}
+    \caption{Comparación de escalabilidad: 100 vs 200 clientes. Las barras de error representan $\pm 1$ desviación estándar sobre las 30 ejecuciones.}
+    \label{fig:scalability}
 \end{figure}
 
-% ============================================================
-% 5. ANÁLISIS Y DISCUSIÓN
-% ============================================================
+% ==========================================================
 \section{Análisis y Discusión}
 
 \subsection{Degradación por Escalabilidad}
-Al incrementar la dimensionalidad de 100 a 200 clientes (Escenarios 1 vs 2), se espera observar un incremento significativo en el Gap y una reducción en la Tasa de Éxito. Esto se debe a que el espacio de búsqueda crece factorialmente ($n!$ permutaciones), dificultando la convergencia del AG con los mismos hiperparámetros. El algoritmo requeriría mayor población y más generaciones para mantener la calidad de las soluciones.
+
+Al incrementar la dimensionalidad de 100 a 200 clientes (Escenarios 1 vs 2), el espacio de búsqueda crece factorialmente ($n!$ permutaciones). Sin embargo, los resultados muestran que el AG mantuvo un gap bajo (0.27\%) incluso con 200 clientes, lo que sugiere que la estructura del problema (agrupamiento natural por capacidad) facilita la convergencia. No obstante, el fitness absoluto del Escenario 2 es mayor simplemente por tener el doble de clientes generando ingresos. Para una comparación justa, el gap relativo confirma que la calidad se mantiene estable.
 
 \subsection{Impacto de las Penalizaciones}
-La comparación entre los Escenarios 4 (penalizaciones altas) y 5 (penalizaciones relajadas) permite evaluar la sensibilidad del AG a la estructura de costos. Con penalizaciones altas, el algoritmo debe encontrar rutas más eficientes en términos de utilización de capacidad, lo que restringe el espacio de soluciones factibles de alta calidad. En contraste, con capacidades ampliadas y costos reducidos, el AG tiene mayor flexibilidad para consolidar rutas, resultando en soluciones de mayor ganancia neta.
+
+La comparación entre los Escenarios 4 y 5 revela el impacto directo de la estructura de costos:
+
+\begin{restrictionbox}
+\begin{itemize}
+    \item \textbf{Escenario 4} (restrictivo): Gap = 1.26\%, Éxito = 93.3\%. La capacidad reducida ($Q=20$) genera más vehículos, cada uno con alto costo fijo (\$500), y el alto costo por km (\$5) penaliza rutas largas. El AG tiene menos margen para rutas ineficientes.
+    \item \textbf{Escenario 5} (relajado): Gap = 0.17\%, Éxito = 100\%. La alta capacidad ($Q=50$) permite consolidar clientes en menos vehículos baratos (\$150), con bajo costo de distancia (\$1). El espacio de soluciones de alta calidad es más amplio.
+\end{itemize}
+\end{restrictionbox}
 
 \subsection{Variabilidad Económica}
-El Escenario 3 (mercado premium) genera valores de fitness absolutos distintos debido a los mayores ingresos por unidad, pero el comportamiento estocástico del AG se mantiene similar. La menor demanda por cliente permite rutas con más clientes por vehículo, reduciendo el número de vehículos necesarios.
+
+El Escenario 3 (mercado premium) genera un fitness absoluto menor (\$135,771) que el base (\$143,721) a pesar de tener mayores ingresos unitarios, debido a que la demanda reducida ($[1,8]$) genera menores ingresos totales por cliente. Sin embargo, el gap (0.33\%) y la tasa de éxito (100\%) confirman que el AG converge consistentemente.
 
 \subsection{Importancia de las 30 Ejecuciones}
-Dado el carácter estocástico de los AG (inicialización aleatoria, selección por torneo, cruce y mutación probabilísticos), una sola ejecución no tiene validez estadística. Las 30 ejecuciones independientes permiten calcular medidas de tendencia central, dispersión y tasas de éxito que caracterizan fielmente el rendimiento del algoritmo.
 
-% ============================================================
-% 6. CONCLUSIONES
-% ============================================================
+Dado el carácter estocástico de los AG (inicialización aleatoria, selección por torneo, cruce y mutación probabilísticos), una sola ejecución no tiene validez estadística \cite{michalewicz1996}. Las 30 ejecuciones independientes permiten calcular medidas de tendencia central, dispersión y tasas de éxito que caracterizan fielmente el rendimiento del algoritmo y posibilitan comparaciones estadísticamente fundamentadas entre escenarios \cite{goldberg1989}.
+
+% ==========================================================
 \section{Conclusiones}
 
+\begin{wrapfigure}{l}{3.5cm}
+    \vspace{-0.4cm}
+    \centering
+    \includegraphics[width=3.2cm, height=3.2cm, keepaspectratio]{javiprofile.jpg}
+    \vspace{-0.4cm}
+\end{wrapfigure}
+
 \begin{enumerate}
-    \item \textbf{Comportamiento bajo estrés de escala:} El AG demuestra ser efectivo para instancias de tamaño medio (100 clientes), pero su rendimiento se degrada al escalar a 200 clientes sin ajustar hiperparámetros. Esto confirma la necesidad de estrategias adaptativas o hibridación con búsqueda local para problemas de mayor dimensionalidad.
+    \item \textbf{Comportamiento bajo estrés de escala:} El AG demostró rendimiento consistente tanto para 100 como para 200 clientes, con gaps menores al 0.4\% en ambos casos. Esto sugiere que la decodificación por capacidad actúa como un mecanismo natural de particionamiento que facilita la convergencia, aunque instancias mayores requerirían ajuste de hiperparámetros o hibridación con búsqueda local.
 
-    \item \textbf{Sensibilidad a parámetros de penalización:} La estructura de costos tiene un impacto directo en la calidad y estructura de las rutas generadas. Penalizaciones altas fuerzan soluciones más compactas pero de menor ganancia neta, mientras que costos relajados permiten mayor consolidación y rentabilidad.
+    \item \textbf{Sensibilidad a parámetros de penalización:} La estructura de costos tiene un impacto directo en la dificultad del problema. El Escenario 4 (penalizaciones altas) fue el único con tasa de éxito inferior al 100\%, confirmando que restricciones operativas severas reducen el espacio de soluciones de alta calidad y dificultan la convergencia.
 
-    \item \textbf{Limitaciones y mejoras potenciales:} El AG implementado utiliza operadores básicos sin búsqueda local. Mejoras como la hibridación con 2-opt o 3-opt, el uso de algoritmos multi-objetivo como NSGA-II \cite{deb2002} para balancear costo y distancia simultáneamente, o esquemas de diversificación adaptativos, podrían mejorar significativamente el rendimiento.
+    \item \textbf{Limitaciones y mejoras potenciales:} El AG implementado utiliza operadores básicos sin búsqueda local. Mejoras como la hibridación con 2-opt o 3-opt \cite{toth2002}, el uso de algoritmos multi-objetivo como NSGA-II \cite{deb2002} para balancear costo y distancia simultáneamente, o esquemas de diversificación adaptativos, podrían mejorar significativamente el rendimiento en escenarios restrictivos.
 
-    \item \textbf{Conexión con aplicaciones reales:} El VRP es análogo a problemas de asignación de recursos bajo restricciones presentes en múltiples industrias. En el sector bancario y fintech, la optimización de rutas para cajeros automáticos, la asignación de límites de crédito bajo restricciones de capital, y la planificación logística de efectivo son problemas estructuralmente similares donde las metaheurísticas evolutivas ofrecen soluciones prácticas.
+    \item \textbf{Conexión con aplicaciones reales:} El VRP es análogo a problemas de asignación de recursos bajo restricciones presentes en múltiples industrias \cite{oliveira2016}. En el sector bancario y fintech, la optimización de rutas para cajeros automáticos, la asignación de límites de crédito bajo restricciones de capital, y la planificación logística de efectivo son problemas estructuralmente similares donde las metaheurísticas evolutivas ofrecen soluciones prácticas.
 \end{enumerate}
 
-% ============================================================
-% 7. REFERENCIAS
-% ============================================================
+\vspace{2em}
+{\color{uacjgray}\hrule}
+\vspace{1em}
+
+% ==========================================================
+% REFERENCIAS
+% ==========================================================
 \begin{thebibliography}{10}
 
 \bibitem{porras2026}
@@ -376,28 +557,5 @@ F. B. de Oliveira, R. Enayatifar, H. J. Sadaei, F. G. Guimarães, and J.-Y. Potv
 doi: 10.1016/j.eswa.2015.08.030
 
 \end{thebibliography}
-
-% ============================================================
-% 8. CONCLUSIÓN PERSONAL
-% ============================================================
-\section*{Conclusión Personal}
-
-\begin{wrapfigure}{r}{0.25\textwidth}
-    \centering
-    % Uncomment when image is available:
-    % \includegraphics[width=0.23\textwidth]{javiprofile.jpg}
-    \vspace{-10pt}
-\end{wrapfigure}
-
-Esta actividad me permitió comprender a profundidad la mecánica interna de los Algoritmos Genéticos, desde la representación cromosómica hasta el diseño de operadores específicos para problemas de permutación como el VRP. La implementación desde cero, sin el uso de librerías de optimización, reforzó mi entendimiento de cada componente del proceso evolutivo.
-
-El diseño experimental con múltiples escenarios me enseñó la importancia de evaluar metaheurísticas bajo condiciones variadas, ya que el rendimiento de un AG puede variar significativamente con cambios en la dimensionalidad del problema o en la estructura de costos. Las 30 ejecuciones independientes por escenario demostraron la naturaleza estocástica de estos algoritmos y la necesidad de métricas estadísticas robustas.
-
-Desde mi experiencia profesional en el sector bancario y fintech, puedo identificar aplicaciones directas de estas técnicas en la optimización de rutas de cajeros automáticos, la asignación dinámica de recursos, y la planificación logística — problemas que comparten la misma estructura combinatoria que el VRP.
-
-\vspace{0.5cm}
-\noindent\textbf{Javier Augusto Rebull Saucedo} \\
-Matrícula: 263483 \\
-MIAAD — UACJ
 
 \end{document}
