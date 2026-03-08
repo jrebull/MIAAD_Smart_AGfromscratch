@@ -3,7 +3,7 @@
 % --- 1. CONFIGURACIÓN DE IDIOMA Y CARACTERES ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish, es-nodecimaldot, es-noquoting]{babel}
+\usepackage[spanish, es-nodecimaldot, es-noquoting, es-noshorthands]{babel}
 \usepackage{csquotes}
 \usepackage{mathpazo}          % Palatino para texto y matemáticas
 \usepackage{microtype}
@@ -22,6 +22,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{wrapfig}
+\usepackage{multicol}
 
 % --- 5. CAJAS Y ENTORNOS ---
 \usepackage{tcolorbox}
@@ -155,28 +156,28 @@
 \begin{notebox}
 \textbf{Repositorio del proyecto (GitHub):}\\[4pt]
 \small\url{https://github.com/jrebull/MIAAD_Smart_AGfromscratch}\\[4pt]
-\normalsize Contiene el código fuente completo (OOP), los datos generados, los resultados de las 150 ejecuciones, las 7 figuras y el dashboard interactivo en Streamlit.
+\normalsize Contiene el código fuente completo (OOP), los datos generados, los resultados de las 150~ejecuciones, las 7~figuras y el dashboard interactivo en Streamlit.
 \end{notebox}
 
 % ==========================================================
 \section{Introducción}
 
-El Problema de Ruteo de Vehículos (\textit{Vehicle Routing Problem}, VRP) es uno de los problemas de optimización combinatoria más estudiados en la investigación de operaciones y la logística computacional. Propuesto originalmente por Dantzig y Ramser en 1959 \cite{dantzig1959}, el VRP busca determinar el conjunto óptimo de rutas que una flota de vehículos debe seguir para atender a un conjunto de clientes dispersos geográficamente, partiendo y regresando a un depósito central.
+El Problema de Ruteo de Vehículos (\textit{Vehicle Routing Problem}, VRP) es uno de los problemas de optimización combinatoria más estudiados en la investigación de operaciones y la logística computacional. Propuesto originalmente por Dantzig y Ramser en 1959~\cite{dantzig1959}, el VRP busca determinar el conjunto óptimo de rutas que una flota de vehículos debe seguir para atender a un conjunto de clientes dispersos geográficamente, partiendo y regresando a un depósito central.
 
-En su variante capacitada (CVRP), cada vehículo tiene una capacidad máxima $Q$ que no puede ser excedida, lo que añade una restricción fundamental que convierte al problema en NP-hard \cite{toth2002}. Debido a la explosión combinatoria del espacio de soluciones, los métodos exactos resultan imprácticos para instancias de tamaño real, haciendo indispensable el uso de metaheurísticas \cite{vidal2020}.
+En su variante capacitada (CVRP), cada vehículo tiene una capacidad máxima~$Q$ que no puede ser excedida, lo que añade una restricción fundamental que convierte al problema en NP-hard~\cite{toth2002}. Debido a la explosión combinatoria del espacio de soluciones, los métodos exactos resultan imprácticos para instancias de tamaño real, haciendo indispensable el uso de metaheurísticas~\cite{vidal2020}.
 
-Los Algoritmos Genéticos (AG), propuestos por Holland \cite{holland1975} y popularizados por Goldberg \cite{goldberg1989}, son metaheurísticas evolutivas que simulan el proceso de selección natural para explorar eficientemente el espacio de soluciones. En este trabajo, se implementa un AG desde cero para resolver instancias del CVRP con una función objetivo que maximiza la ganancia neta, y se evalúa su rendimiento bajo cinco escenarios experimentales distintos con 30 ejecuciones independientes cada uno \cite{porras2026}.
+Los Algoritmos Genéticos (AG), propuestos por Holland~\cite{holland1975} y popularizados por Goldberg~\cite{goldberg1989}, son metaheurísticas evolutivas que simulan el proceso de selección natural para explorar eficientemente el espacio de soluciones. En este trabajo se implementa un AG desde cero para resolver instancias del CVRP con una función objetivo que maximiza la ganancia neta, y se evalúa su rendimiento bajo cinco escenarios experimentales distintos con 30~ejecuciones independientes cada uno~\cite{porras2026}.
 
 % ==========================================================
 \section{Marco Teórico}
 
 \subsection{Formulación Matemática}
 
-La formulación utilizada busca \textbf{maximizar la ganancia neta} $Z$, definida como la diferencia entre los ingresos totales por entrega y los costos operativos:
+La formulación utilizada busca \textbf{maximizar la ganancia neta}~$Z$, definida como la diferencia entre los ingresos totales por entrega y los costos operativos:
 
 \begin{formulabox}
 \begin{equation}
-Z = \sum_{i=1}^{n}(D_i \times V_i) - \left[(N_{veh} \times C_{veh}) + (Dist_{total} \times C_{dist}) + (Vacío_{total} \times C_{vacío})\right]
+Z = \sum_{i=1}^{n}(D_i \times V_i) - \left[(N_{veh} \times C_{veh}) + (Dist_{total} \times C_{dist}) + (\text{Vac\'io}_{total} \times C_{\text{vac\'io}})\right]
 \label{eq:fitness}
 \end{equation}
 \end{formulabox}
@@ -197,19 +198,19 @@ Z = \sum_{i=1}^{n}(D_i \times V_i) - \left[(N_{veh} \times C_{veh}) + (Dist_{tot
     \textcolor{white}{\textbf{Descripción}} &
     \textcolor{white}{\textbf{Valor base}} \\
     \midrule
-    $D_i$              & Demanda (unidades) del cliente $i$       & aleatorio $\in [5, 15]$ \\
+    $D_i$              & Demanda (unidades) del cliente $i$        & aleatorio $\in [5, 15]$ \\
     \rowcolor{gray!8}
-    $V_i$              & Ingreso por unidad del cliente $i$       & aleatorio $\in [50, 300]$ \\
-    $N_{veh}$          & Número de vehículos utilizados           & endógeno \\
+    $V_i$              & Ingreso por unidad del cliente $i$        & aleatorio $\in [50, 300]$ \\
+    $N_{veh}$          & Número de vehículos utilizados            & endógeno \\
     \rowcolor{gray!8}
-    $C_{veh}$          & Costo fijo por vehículo                  & \$300 \\
-    $Dist_{total}$     & Distancia euclidiana total recorrida     & endógeno \\
+    $C_{veh}$          & Costo fijo por vehículo                   & \$300 \\
+    $Dist_{total}$     & Distancia euclidiana total recorrida      & endógeno \\
     \rowcolor{gray!8}
-    $C_{dist}$         & Costo por kilómetro                      & \$2 \\
-    $Vacío_{total}$    & Capacidad no utilizada total              & endógeno \\
+    $C_{dist}$         & Costo por kilómetro                       & \$2 \\
+    $\text{Vac\'io}_{total}$ & Capacidad no utilizada total               & endógeno \\
     \rowcolor{gray!8}
-    $C_{vacío}$        & Penalización por unidad vacía             & \$10 \\
-    $Q$                & Capacidad del vehículo                    & 30 unidades \\
+    $C_{\text{vac\'io}}$     & Penalización por unidad vacía              & \$10 \\
+    $Q$                & Capacidad máxima del vehículo              & 30 unidades \\
     \bottomrule
 \end{tabular}
 \end{table}
@@ -225,12 +226,12 @@ d(c_1, c_2) = \sqrt{(x_{c_2} - x_{c_1})^2 + (y_{c_2} - y_{c_1})^2}
 
 \subsection{Representación Cromosómica}
 
-Cada individuo es una \textbf{permutación} de los identificadores de clientes. El decodificador lee de izquierda a derecha asignando clientes al vehículo actual hasta que la carga exceda $Q$, momento en el cual se cierra la ruta y se inicia un nuevo vehículo.
+Cada individuo es una \textbf{permutación} de los identificadores de clientes. El decodificador lee de izquierda a derecha asignando clientes al vehículo actual hasta que la carga exceda~$Q$, momento en el cual se cierra la ruta y se inicia un nuevo vehículo.
 
 \begin{notebox}
 \textbf{Ejemplo para 5 clientes:} \texttt{Cromosoma = [3, 1, 5, 2, 4]}\\[4pt]
-Si $Q = 10$ y las demandas son $D_3=4, D_1=3, D_5=5, D_2=6, D_4=3$:\\
-Ruta 1: $[3, 1] \rightarrow$ carga = 7 \quad|\quad Ruta 2: $[5] \rightarrow$ carga = 5 \quad|\quad Ruta 3: $[2, 4] \rightarrow$ carga = 9
+Si $Q = 10$ y las demandas son $D_3=4,\;D_1=3,\;D_5=5,\;D_2=6,\;D_4=3$:\\[4pt]
+Ruta 1: $[3, 1] \rightarrow$ carga $= 7$ \quad|\quad Ruta 2: $[5] \rightarrow$ carga $= 5$ \quad|\quad Ruta 3: $[2, 4] \rightarrow$ carga $= 9$
 \end{notebox}
 
 \subsection{Operadores Genéticos}
@@ -239,12 +240,12 @@ Ruta 1: $[3, 1] \rightarrow$ carga = 7 \quad|\quad Ruta 2: $[5] \rightarrow$ car
 Se muestrean $k=3$ individuos aleatorios de la población y se selecciona al de mayor fitness. Este método ofrece presión selectiva controlable sin requerir ordenamiento completo de la población.
 
 \subsubsection{Cruce OX1 (Order Crossover)}
-Propuesto por Davis (1985) \cite{davis1985}, el OX1 preserva el orden relativo de sub-secuencias sin duplicar genes:
+Propuesto por Davis (1985)~\cite{davis1985}, el OX1 preserva el orden relativo de sub-secuencias sin duplicar genes:
 
 \begin{restrictionbox}
 \begin{enumerate}
-    \item Se selecciona un segmento aleatorio del Padre 1 y se copia al hijo en las mismas posiciones.
-    \item Se llenan las posiciones restantes (de izquierda a derecha) con genes del Padre 2 en su orden original, omitiendo los ya presentes en el segmento copiado.
+    \item Se selecciona un segmento aleatorio del Padre~1 y se copia al hijo en las mismas posiciones.
+    \item Se llenan las posiciones restantes (de izquierda a derecha) con genes del Padre~2 en su orden original, omitiendo los ya presentes en el segmento copiado.
 \end{enumerate}
 \end{restrictionbox}
 
@@ -252,7 +253,7 @@ Propuesto por Davis (1985) \cite{davis1985}, el OX1 preserva el orden relativo d
 Con probabilidad $p_m = 0.15$, se seleccionan dos posiciones al azar y se intercambian sus valores, introduciendo diversidad genética controlada.
 
 \subsubsection{Elitismo}
-El mejor individuo de la generación $t$ sobrevive intacto a la generación $t+1$, garantizando que la calidad de la mejor solución nunca se deteriore.
+El mejor individuo de la generación~$t$ sobrevive intacto a la generación~$t+1$, garantizando que la calidad de la mejor solución nunca se deteriore.
 
 % ==========================================================
 \section{Diseño Experimental}
@@ -282,7 +283,7 @@ Los hiperparámetros del AG se mantuvieron constantes en todos los escenarios:
     Cruza             & Order Crossover (OX1)          & Davis, 1985 \\
     \rowcolor{gray!8}
     Mutación          & Intercambio (swap)             & $p_m = 0.15$ \\
-    Elitismo          & Preservación del mejor         & 1 elite \\
+    Elitismo          & Preservación del mejor         & 1 élite \\
     \rowcolor{gray!8}
     Ejecuciones       & Independientes por escenario   & 30 (seeds 0--29) \\
     \bottomrule
@@ -298,7 +299,7 @@ Se diseñaron cinco escenarios para evaluar el rendimiento del AG bajo diferente
 \caption{Configuración de los 5 escenarios experimentales.}
 \label{tab:scenarios}
 \renewcommand{\arraystretch}{1.3}
-\resizebox{\textwidth}{!}{
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccccc}
     \toprule
     \rowcolor{tablehead}
@@ -306,27 +307,27 @@ Se diseñaron cinco escenarios para evaluar el rendimiento del AG bajo diferente
     \textcolor{white}{\textbf{Clientes}} &
     \textcolor{white}{\textbf{Demanda}} &
     \textcolor{white}{\textbf{Valor}} &
-    \textcolor{white}{\textbf{Q}} &
+    \textcolor{white}{\textbf{$Q$}} &
     \textcolor{white}{\textbf{$C_{veh}$}} &
     \textcolor{white}{\textbf{$C_{dist}$}} &
-    \textcolor{white}{\textbf{$C_{vacío}$}} \\
+    \textcolor{white}{\textbf{$C_{\text{vac\'io}}$}} \\
     \midrule
-    1 — Escalabilidad Media     & 100 & [5, 15] & [50, 300]   & 30 & \$300 & \$2 & \$10 \\
+    1 --- Escalabilidad Media    & 100 & [5, 15] & [50, 300]  & 30 & \$300 & \$2 & \$10 \\
     \rowcolor{gray!8}
-    2 — Alta Escalabilidad      & 200 & [5, 15] & [50, 300]   & 30 & \$300 & \$2 & \$10 \\
-    3 — Variabilidad Económica  & 100 & [1, 8]  & [150, 600]  & 30 & \$300 & \$2 & \$10 \\
+    2 --- Alta Escalabilidad     & 200 & [5, 15] & [50, 300]  & 30 & \$300 & \$2 & \$10 \\
+    3 --- Variabilidad Económica & 100 & [1, 8]  & [150, 600] & 30 & \$300 & \$2 & \$10 \\
     \rowcolor{gray!8}
-    4 — Estrés: Penalizaciones  & 100 & [5, 15] & [50, 300]   & 20 & \$500 & \$5 & \$15 \\
-    5 — Estrés: Cap.\ Ampliada  & 100 & [5, 15] & [50, 300]   & 50 & \$150 & \$1 & \$5  \\
+    4 --- Estrés: Penalizaciones & 100 & [5, 15] & [50, 300]  & 20 & \$500 & \$5 & \$15 \\
+    5 --- Estrés: Cap.\ Ampliada & 100 & [5, 15] & [50, 300]  & 50 & \$150 & \$1 & \$5  \\
     \bottomrule
-\end{tabular}
+\end{tabular}%
 }
 \end{table}
 
 \subsubsection{Justificación del Escenario 3 — Variabilidad Económica}
 
 \begin{yellowbox}
-Simula un \textbf{mercado de bienes de lujo} donde cada entrega es pequeña en volumen pero alta en valor unitario (demanda $\in [1, 8]$, valor $\in [150, 600]$). Esto obliga al AG a balancear la eficiencia de rutas contra la captura de ingresos premium. La menor demanda por cliente permite más clientes por vehículo, reduciendo el número de vehículos.
+Simula un \textbf{mercado de bienes de lujo} donde cada entrega es pequeña en volumen pero alta en valor unitario (demanda $\in [1,8]$, valor $\in [150,600]$). Esto obliga al AG a balancear la eficiencia de rutas contra la captura de ingresos premium. La menor demanda por cliente permite atender más clientes por vehículo, reduciendo el número de camiones necesarios.
 \end{yellowbox}
 
 \subsubsection{Justificación del Escenario 4 — Penalizaciones Altas}
@@ -338,7 +339,7 @@ Modela una operación con \textbf{vehículos especializados costosos} (refrigera
 \subsubsection{Justificación del Escenario 5 — Capacidad Ampliada}
 
 \begin{yellowbox}
-Representa \textbf{distribución masiva con vehículos de gran capacidad} ($Q=50$) en un área urbana densa, con costos operativos reducidos ($C_{veh}=\$150$, $C_{dist}=\$1$, $C_{vacío}=\$5$), permitiendo al AG consolidar rutas con mayor libertad y menor penalización por subutilización.
+Representa \textbf{distribución masiva con vehículos de gran capacidad} ($Q=50$) en un área urbana densa, con costos operativos reducidos ($C_{veh}=\$150$, $C_{dist}=\$1$, $C_{\text{vac\'io}}=\$5$), permitiendo al AG consolidar rutas con mayor libertad y menor penalización por subutilización.
 \end{yellowbox}
 
 % ==========================================================
@@ -346,14 +347,23 @@ Representa \textbf{distribución masiva con vehículos de gran capacidad} ($Q=50
 
 \subsection{Métricas de Rendimiento}
 
-La Tabla~\ref{tab:results} presenta las cuatro métricas de rendimiento exigidas para cada escenario, calculadas sobre las 30 ejecuciones independientes.
+La Tabla~\ref{tab:results} presenta las cuatro métricas de rendimiento exigidas para cada escenario, calculadas sobre las 30~ejecuciones independientes. El \textit{Gap} se define como:
+
+\begin{formulabox}
+\begin{equation}
+\text{Gap}(\%) = \frac{BKS - \overline{Z}_{best}}{BKS} \times 100
+\label{eq:gap}
+\end{equation}
+\end{formulabox}
+
+\noindent donde $BKS$ es el mejor valor encontrado en las 30~ejecuciones y $\overline{Z}_{best}$ es la media de los mejores valores por ejecución. La \textbf{Tasa de Éxito} considera exitosa una ejecución si $Z_{best} \geq BKS \times 0.98$ (tolerancia del 2\%).
 
 \begin{table}[H]
 \centering
 \caption{Métricas de rendimiento por escenario (30 ejecuciones independientes).}
 \label{tab:results}
 \renewcommand{\arraystretch}{1.3}
-\resizebox{\textwidth}{!}{
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcrrrrc}
     \toprule
     \rowcolor{tablehead}
@@ -365,55 +375,55 @@ La Tabla~\ref{tab:results} presenta las cuatro métricas de rendimiento exigidas
     \textcolor{white}{\textbf{Éxito (\%)}} &
     \textcolor{white}{\textbf{Desv.\ Est.\ (\$)}} \\
     \midrule
-    1 — Escalabilidad Media     & 100 & 143,721 & 143,177 & 0.38 & 100.0 & --- \\
+    1 --- Escalabilidad Media    & 100 & 143{,}721 & 143{,}177 & 0.38 & 100.0 & --- \\
     \rowcolor{gray!8}
-    2 — Alta Escalabilidad      & 200 & 294,349 & 293,541 & 0.27 & 100.0 & --- \\
-    3 — Variabilidad Económica  & 100 & 135,771 & 135,321 & 0.33 & 100.0 & --- \\
+    2 --- Alta Escalabilidad     & 200 & 294{,}349 & 293{,}541 & 0.27 & 100.0 & --- \\
+    3 --- Variabilidad Económica & 100 & 135{,}771 & 135{,}321 & 0.33 & 100.0 & --- \\
     \rowcolor{gray!8}
-    4 — Estrés: Penalizaciones  & 100 & 109,465 & 108,090 & 1.26 & 93.3  & --- \\
-    5 — Estrés: Cap.\ Ampliada  & 100 & 156,445 & 156,184 & 0.17 & 100.0 & --- \\
+    4 --- Estrés: Penalizaciones & 100 & 109{,}465 & 108{,}090 & 1.26 & 93.3  & --- \\
+    5 --- Estrés: Cap.\ Ampliada & 100 & 156{,}445 & 156{,}184 & 0.17 & 100.0 & --- \\
     \bottomrule
-\end{tabular}
+\end{tabular}%
 }
 \end{table}
 
 \begin{resultbox}
 \textbf{Observaciones clave:}
 \begin{itemize}
-    \item El Escenario 5 (capacidad ampliada) alcanzó el \textbf{menor gap} (0.17\%) y la mayor consistencia, confirmando que costos operativos bajos facilitan la convergencia.
-    \item El Escenario 4 (penalizaciones altas) fue el más desafiante, con un gap de 1.26\% y tasa de éxito de 93.3\%, evidenciando que la estructura de costos restrictiva dificulta la optimización.
-    \item Todos los escenarios excepto el 4 alcanzaron una tasa de éxito del 100\% con tolerancia del 2\%.
+    \item El Escenario~5 (capacidad ampliada) alcanzó el \textbf{menor gap} (0.17\%) y la mayor consistencia, confirmando que costos operativos bajos facilitan la convergencia.
+    \item El Escenario~4 (penalizaciones altas) fue el más desafiante: gap de 1.26\% y tasa de éxito de 93.3\%, evidenciando que la estructura de costos restrictiva dificulta la optimización.
+    \item Todos los escenarios excepto el~4 alcanzaron una tasa de éxito del 100\% con tolerancia del 2\%.
 \end{itemize}
 \end{resultbox}
 
 \subsection{Curva de Convergencia}
 
-La Figura~\ref{fig:convergence} muestra la evolución del mejor fitness a lo largo de las 300 generaciones para la mejor ejecución del Escenario 1. Se observa una convergencia rápida en las primeras 50 generaciones, seguida de un refinamiento gradual.
+La Figura~\ref{fig:convergence} muestra la evolución del mejor fitness a lo largo de las 300~generaciones para la mejor ejecución del Escenario~1. Se observa una convergencia rápida en las primeras 50~generaciones, seguida de un refinamiento gradual.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig01_convergencia_base.png}
-    \caption{Curva de convergencia — Escenario 1 (100 clientes). La zona sombreada destaca la mejora acumulada. La convergencia principal ocurre antes de la generación 100.}
+    \caption{Curva de convergencia --- Escenario~1 (100~clientes). La convergencia principal ocurre antes de la generación~100; las mejoras posteriores son marginales.}
     \label{fig:convergence}
 \end{figure}
 
 \subsection{Distribución de Resultados}
 
-La Figura~\ref{fig:boxplot} presenta la distribución de los mejores valores de fitness obtenidos en cada escenario, permitiendo visualizar la dispersión y los valores atípicos.
+La Figura~\ref{fig:boxplot} presenta la distribución de los mejores valores de fitness obtenidos en cada escenario, permitiendo visualizar la dispersión y los valores atípicos entre las 30~ejecuciones.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig02_boxplot_escenarios.png}
-    \caption{Distribución de fitness por escenario (30 ejecuciones). La baja dispersión en los escenarios 1, 3 y 5 indica alta consistencia del AG.}
+    \caption{Distribución de fitness por escenario (30~ejecuciones). La baja dispersión en los escenarios~1, 3 y~5 indica alta consistencia del AG.}
     \label{fig:boxplot}
 \end{figure}
 
-\subsection{Comparativa BKS vs Promedio}
+\subsection{Comparativa BKS vs.\ Promedio}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig03_barras_metricas.png}
-    \caption{BKS vs Promedio de Mejor Fitness por escenario. La cercanía entre ambas barras indica baja variabilidad entre ejecuciones.}
+    \caption{BKS vs.\ Promedio de Mejor Fitness por escenario. La cercanía entre ambas barras indica baja variabilidad entre ejecuciones.}
     \label{fig:barras}
 \end{figure}
 
@@ -422,18 +432,18 @@ La Figura~\ref{fig:boxplot} presenta la distribución de los mejores valores de 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig04_gap_success.png}
-    \caption{Brecha (Gap \%) y Tasa de Éxito (\%) por escenario. El Escenario 4 presenta el mayor gap y la menor tasa de éxito.}
+    \caption{Brecha (Gap~\%) y Tasa de Éxito~(\%) por escenario. El Escenario~4 presenta el mayor gap y la menor tasa de éxito de los cinco.}
     \label{fig:gap}
 \end{figure}
 
 \subsection{Mapa de Rutas Óptimas}
 
-La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escenario 1, mostrando las rutas asignadas a cada vehículo partiendo y regresando al depósito central (estrella roja).
+La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escenario~1, mostrando las rutas asignadas a cada vehículo partiendo y regresando al depósito central (estrella roja).
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{Figures/fig05_ruta_optima.png}
-    \caption{Mapa de rutas óptimas — Escenario 1. Cada color representa un vehículo diferente. El depósito se ubica en el centro del área de servicio.}
+    \caption{Mapa de rutas óptimas --- Escenario~1. Cada color representa un vehículo diferente. El depósito se ubica en el centro del área de servicio.}
     \label{fig:routes}
 \end{figure}
 
@@ -442,7 +452,7 @@ La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escen
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig06_heatmap_params.png}
-    \caption{Heatmap de sensibilidad: configuración de costos vs fitness para los escenarios base (1), restrictivo (4) y relajado (5).}
+    \caption{Heatmap de sensibilidad: configuración de costos vs.\ fitness promedio para los escenarios base~(1), restrictivo~(4) y relajado~(5).}
     \label{fig:heatmap}
 \end{figure}
 
@@ -451,7 +461,7 @@ La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escen
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig07_escalabilidad.png}
-    \caption{Comparación de escalabilidad: 100 vs 200 clientes. Las barras de error representan $\pm 1$ desviación estándar sobre las 30 ejecuciones.}
+    \caption{Comparación de escalabilidad: 100~vs.\ 200~clientes. Las barras de error representan $\pm 1$ desviación estándar sobre las 30~ejecuciones.}
     \label{fig:scalability}
 \end{figure}
 
@@ -460,102 +470,117 @@ La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escen
 
 \subsection{Degradación por Escalabilidad}
 
-Al incrementar la dimensionalidad de 100 a 200 clientes (Escenarios 1 vs 2), el espacio de búsqueda crece factorialmente ($n!$ permutaciones). Sin embargo, los resultados muestran que el AG mantuvo un gap bajo (0.27\%) incluso con 200 clientes, lo que sugiere que la estructura del problema (agrupamiento natural por capacidad) facilita la convergencia. No obstante, el fitness absoluto del Escenario 2 es mayor simplemente por tener el doble de clientes generando ingresos. Para una comparación justa, el gap relativo confirma que la calidad se mantiene estable.
+Al incrementar la dimensionalidad de 100 a 200~clientes (Escenarios~1 vs.~2), el espacio de búsqueda crece factorialmente ($n!$ permutaciones posibles). Sin embargo, los resultados muestran que el AG mantuvo un gap bajo (0.27\%) incluso con 200~clientes, lo que sugiere que la decodificación basada en capacidad actúa como mecanismo natural de particionamiento que facilita la convergencia. El fitness absoluto del Escenario~2 es mayor simplemente por tener el doble de clientes generando ingresos; el gap relativo confirma que la calidad se mantiene estable ante el incremento de escala.
 
 \subsection{Impacto de las Penalizaciones}
 
-La comparación entre los Escenarios 4 y 5 revela el impacto directo de la estructura de costos:
+La comparación entre los Escenarios~4 y~5 revela el impacto directo de la estructura de costos sobre la optimización:
 
 \begin{restrictionbox}
 \begin{itemize}
-    \item \textbf{Escenario 4} (restrictivo): Gap = 1.26\%, Éxito = 93.3\%. La capacidad reducida ($Q=20$) genera más vehículos, cada uno con alto costo fijo (\$500), y el alto costo por km (\$5) penaliza rutas largas. El AG tiene menos margen para rutas ineficientes.
-    \item \textbf{Escenario 5} (relajado): Gap = 0.17\%, Éxito = 100\%. La alta capacidad ($Q=50$) permite consolidar clientes en menos vehículos baratos (\$150), con bajo costo de distancia (\$1). El espacio de soluciones de alta calidad es más amplio.
+    \item \textbf{Escenario~4} (restrictivo): Gap = 1.26\%, Éxito = 93.3\%. La capacidad reducida ($Q=20$) obliga a usar más vehículos, cada uno con alto costo fijo (\$500), mientras que el elevado costo por km~(\$5) penaliza rutas largas. El AG dispone de menos margen para soluciones ineficientes.
+    \item \textbf{Escenario~5} (relajado): Gap = 0.17\%, Éxito = 100\%. La alta capacidad ($Q=50$) permite consolidar clientes en menos vehículos baratos (\$150) con bajo costo de distancia (\$1). El espacio de soluciones de alta calidad es más amplio, facilitando la convergencia.
 \end{itemize}
 \end{restrictionbox}
 
 \subsection{Variabilidad Económica}
 
-El Escenario 3 (mercado premium) genera un fitness absoluto menor (\$135,771) que el base (\$143,721) a pesar de tener mayores ingresos unitarios, debido a que la demanda reducida ($[1,8]$) genera menores ingresos totales por cliente. Sin embargo, el gap (0.33\%) y la tasa de éxito (100\%) confirman que el AG converge consistentemente.
+El Escenario~3 (mercado premium) genera un fitness absoluto menor (\$135{,}771) que el base (\$143{,}721) pese a tener mayores ingresos unitarios, debido a que la demanda reducida ($\in[1,8]$) produce menores ingresos totales por cliente. No obstante, el gap (0.33\%) y la tasa de éxito (100\%) confirman que el AG converge consistentemente ante esta estructura económica alternativa.
 
-\subsection{Importancia de las 30 Ejecuciones}
+\subsection{Importancia de las 30~Ejecuciones}
 
-Dado el carácter estocástico de los AG (inicialización aleatoria, selección por torneo, cruce y mutación probabilísticos), una sola ejecución no tiene validez estadística \cite{michalewicz1996}. Las 30 ejecuciones independientes permiten calcular medidas de tendencia central, dispersión y tasas de éxito que caracterizan fielmente el rendimiento del algoritmo y posibilitan comparaciones estadísticamente fundamentadas entre escenarios \cite{goldberg1989}.
+Dado el carácter estocástico de los AG —inicialización aleatoria, selección por torneo, cruce y mutación probabilísticos— una sola ejecución carece de validez estadística~\cite{michalewicz1996}. Las 30~ejecuciones independientes permiten calcular medidas de tendencia central, dispersión y tasas de éxito que caracterizan fielmente el rendimiento del algoritmo, posibilitando comparaciones estadísticamente fundamentadas entre escenarios~\cite{goldberg1989}.
 
 % ==========================================================
 \section{Conclusiones}
 
-\begin{wrapfigure}{l}{3.5cm}
-    \vspace{-0.4cm}
+% --- Foto + párrafo introductorio (wrapfig debe estar ANTES del texto que envuelve) ---
+\begin{wrapfigure}{l}{3.6cm}
+    \vspace{-2pt}
     \centering
-    \includegraphics[width=3.2cm, height=3.2cm, keepaspectratio]{javiprofile.jpg}
-    \vspace{-0.4cm}
+    \includegraphics[width=3.3cm, height=3.3cm, keepaspectratio]{javiprofile.jpg}
+    \vspace{4pt}
 \end{wrapfigure}
 
+Los resultados del experimento computacional confirman la viabilidad del Algoritmo Genético como metaheurística para el CVRP bajo distintas condiciones operativas y de escalabilidad. A continuación se presentan las principales conclusiones derivadas del análisis de las 150~ejecuciones (30~por escenario):
+
+\medskip
 \begin{enumerate}
-    \item \textbf{Comportamiento bajo estrés de escala:} El AG demostró rendimiento consistente tanto para 100 como para 200 clientes, con gaps menores al 0.4\% en ambos casos. Esto sugiere que la decodificación por capacidad actúa como un mecanismo natural de particionamiento que facilita la convergencia, aunque instancias mayores requerirían ajuste de hiperparámetros o hibridación con búsqueda local.
+    \item \textbf{Robustez ante el crecimiento de escala.} El AG demostró rendimiento consistente tanto para 100 como para 200~clientes, con gaps menores al 0.4\% en ambos casos. La decodificación por capacidad actúa como mecanismo natural de particionamiento que facilita la convergencia. Instancias significativamente mayores podrían requerir ajuste de hiperparámetros o hibridación con búsqueda local (2-opt, 3-opt).
 
-    \item \textbf{Sensibilidad a parámetros de penalización:} La estructura de costos tiene un impacto directo en la dificultad del problema. El Escenario 4 (penalizaciones altas) fue el único con tasa de éxito inferior al 100\%, confirmando que restricciones operativas severas reducen el espacio de soluciones de alta calidad y dificultan la convergencia.
+    \item \textbf{Sensibilidad a la estructura de penalizaciones.} El Escenario~4 fue el único con tasa de éxito inferior al 100\%, confirmando que restricciones operativas severas —alta penalización por vehículo, por distancia y por espacio vacío— reducen el espacio de soluciones de alta calidad y dificultan la convergencia. El diseño cuidadoso de la función objetivo es determinante para el desempeño del AG.
 
-    \item \textbf{Limitaciones y mejoras potenciales:} El AG implementado utiliza operadores básicos sin búsqueda local. Mejoras como la hibridación con 2-opt o 3-opt \cite{toth2002}, el uso de algoritmos multi-objetivo como NSGA-II \cite{deb2002} para balancear costo y distancia simultáneamente, o esquemas de diversificación adaptativos, podrían mejorar significativamente el rendimiento en escenarios restrictivos.
+    \item \textbf{Limitaciones y mejoras potenciales.} El AG base utiliza operadores simples sin refinamiento local. La integración de heurísticas de vecindad (2-opt, Lin-Kernighan), algoritmos multi-objetivo como NSGA-II~\cite{deb2002} para optimizar costo y distancia simultáneamente, o esquemas de diversificación adaptativos, representan extensiones naturales que mejorarían el rendimiento en escenarios restrictivos.
 
-    \item \textbf{Conexión con aplicaciones reales:} El VRP es análogo a problemas de asignación de recursos bajo restricciones presentes en múltiples industrias \cite{oliveira2016}. En el sector bancario y fintech, la optimización de rutas para cajeros automáticos, la asignación de límites de crédito bajo restricciones de capital, y la planificación logística de efectivo son problemas estructuralmente similares donde las metaheurísticas evolutivas ofrecen soluciones prácticas.
+    \item \textbf{Conexión con aplicaciones industriales.} El VRP es estructuralmente análogo a problemas presentes en múltiples sectores. En la industria bancaria y fintech —contexto de trabajo del autor— la optimización de rutas de reabastecimiento de cajeros automáticos, la asignación de límites de crédito bajo restricciones de capital regulatorio, y la planificación logística de efectivo comparten la misma naturaleza combinatoria. Las metaheurísticas evolutivas ofrecen soluciones prácticas y escalables donde los métodos exactos resultan computacionalmente prohibitivos~\cite{oliveira2016}.
 \end{enumerate}
 
-\vspace{2em}
+\vspace{1.5em}
 {\color{uacjgray}\hrule}
 \vspace{1em}
 
 % ==========================================================
-% REFERENCIAS
+% REFERENCIAS — doble columna
 % ==========================================================
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+
+\begin{multicols}{2}
+\small
 \begin{thebibliography}{10}
 
 \bibitem{porras2026}
-R. G. Porras Alaniz, ``Programando un Algoritmo Genético desde Cero para el VRP,''
+R.~G. Porras~Alaniz, ``Programando un Algoritmo Genético desde Cero para el VRP,''
 Universidad Autónoma de Ciudad Juárez (UACJ), 2026. [Online].
-Available: AGfromscratch.html [Accessed: Mar. 8, 2026].
+Available: \texttt{AGfromscratch.html} [Accessed: Mar.\ 8, 2026].
 
 \bibitem{dantzig1959}
-G. B. Dantzig and J. H. Ramser, ``The truck dispatching problem,''
-\textit{Management Science}, vol. 6, no. 1, pp. 80--91, Oct. 1959.
-doi: 10.1287/mnsc.6.1.80
+G.~B. Dantzig and J.~H. Ramser, ``The truck dispatching problem,''
+\textit{Management Science}, vol.~6, no.~1, pp.~80--91, Oct.~1959.
+doi:~10.1287/mnsc.6.1.80
 
 \bibitem{davis1985}
-L. Davis, ``Applying adaptive algorithms to epistatic domains,''
-in \textit{Proc. Int. Joint Conf. Artificial Intelligence (IJCAI)}, 1985, pp. 162--164.
+L.~Davis, ``Applying adaptive algorithms to epistatic domains,''
+in \textit{Proc.\ Int.\ Joint Conf.\ Artificial Intelligence (IJCAI)},
+1985, pp.~162--164.
 
 \bibitem{deb2002}
-K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan, ``A fast and elitist multiobjective
-genetic algorithm: NSGA-II,'' \textit{IEEE Trans. Evol. Comput.}, vol. 6, no. 2,
-pp. 182--197, Apr. 2002. doi: 10.1109/4235.996017
+K.~Deb, A.~Pratap, S.~Agarwal, and T.~Meyarivan, ``A fast and elitist
+multiobjective genetic algorithm: NSGA-II,'' \textit{IEEE Trans.\ Evol.\
+Comput.}, vol.~6, no.~2, pp.~182--197, Apr.~2002.
+doi:~10.1109/4235.996017
 
 \bibitem{holland1975}
-J. H. Holland, \textit{Adaptation in Natural and Artificial Systems}. Ann Arbor, MI:
-University of Michigan Press, 1975.
+J.~H. Holland, \textit{Adaptation in Natural and Artificial Systems}.
+Ann Arbor, MI: University of Michigan Press, 1975.
 
 \bibitem{toth2002}
-P. Toth and D. Vigo, Eds., \textit{The Vehicle Routing Problem}. Philadelphia, PA:
-SIAM Monographs on Discrete Mathematics and Applications, 2002.
+P.~Toth and D.~Vigo, Eds., \textit{The Vehicle Routing Problem}.
+Philadelphia, PA: SIAM Monographs on Discrete Mathematics and
+Applications, 2002.
 
 \bibitem{vidal2020}
-T. Vidal, G. Laporte, and P. Matl, ``A concise guide to existing and emerging
-vehicle routing problem variants,'' \textit{European Journal of Operational Research},
-vol. 286, no. 2, pp. 401--416, 2020. doi: 10.1016/j.ejor.2019.06.046
+T.~Vidal, G.~Laporte, and P.~Matl, ``A concise guide to existing and
+emerging vehicle routing problem variants,'' \textit{European Journal of
+Operational Research}, vol.~286, no.~2, pp.~401--416, 2020.
+doi:~10.1016/j.ejor.2019.06.046
 
 \bibitem{goldberg1989}
-D. E. Goldberg, \textit{Genetic Algorithms in Search, Optimization, and Machine Learning}.
-Reading, MA: Addison-Wesley, 1989.
+D.~E. Goldberg, \textit{Genetic Algorithms in Search, Optimization,
+and Machine Learning}. Reading, MA: Addison-Wesley, 1989.
 
 \bibitem{michalewicz1996}
-Z. Michalewicz, \textit{Genetic Algorithms + Data Structures = Evolution Programs}, 3rd ed.
-Berlin, Germany: Springer, 1996.
+Z.~Michalewicz, \textit{Genetic Algorithms + Data Structures = Evolution
+Programs}, 3rd ed. Berlin, Germany: Springer, 1996.
 
 \bibitem{oliveira2016}
-F. B. de Oliveira, R. Enayatifar, H. J. Sadaei, F. G. Guimarães, and J.-Y. Potvin,
-``A cooperative coevolutionary algorithm for the multi-depot vehicle routing problem,''
-\textit{Expert Systems with Applications}, vol. 43, pp. 117--130, Feb. 2016.
-doi: 10.1016/j.eswa.2015.08.030
+F.~B. de~Oliveira, R.~Enayatifar, H.~J. Sadaei, F.~G. Guimarães, and
+J.-Y. Potvin, ``A cooperative coevolutionary algorithm for the
+multi-depot vehicle routing problem,'' \textit{Expert Systems with
+Applications}, vol.~43, pp.~117--130, Feb.~2016.
+doi:~10.1016/j.eswa.2015.08.030
 
 \end{thebibliography}
+\end{multicols}
 
 \end{document}
