@@ -290,6 +290,18 @@ Los hiperparámetros del AG se mantuvieron constantes en todos los escenarios:
 \end{tabular}
 \end{table}
 
+\subsection{Implementación: Scripts del Modelo Base}
+
+La Fase~1 de la práctica consistió en replicar el modelo del documento de referencia~\cite{porras2026} en dos scripts Python con separación de responsabilidades:
+
+\begin{itemize}
+    \item \texttt{generador\_instancias.py}: Genera instancias del CVRP como archivos JSON. Permite configurar el número de clientes, rangos de demanda y valor, y la semilla aleatoria para reproducibilidad. El depósito se ubica siempre en el índice~0 en el centro del área de coordenadas.
+
+    \item \texttt{ag\_vrp.py}: Motor de la metaheurística. Carga la instancia JSON, ejecuta el ciclo evolutivo completo (inicialización $\rightarrow$ evaluación $\rightarrow$ selección $\rightarrow$ cruce OX1 $\rightarrow$ mutación swap $\rightarrow$ elitismo) y devuelve el Top-3 de soluciones históricas junto con su desglose económico detallado.
+\end{itemize}
+
+La separación en dos scripts garantiza que el mismo escenario generado pueda ser evaluado múltiples veces de forma idéntica, condición necesaria para la validez estadística del experimento de 30~ejecuciones por escenario.
+
 \subsection{Escenarios Experimentales}
 
 Se diseñaron cinco escenarios para evaluar el rendimiento del AG bajo diferentes condiciones de escalabilidad, variabilidad económica y estrés operativo:
@@ -375,13 +387,13 @@ La Tabla~\ref{tab:results} presenta las cuatro métricas de rendimiento exigidas
     \textcolor{white}{\textbf{Éxito (\%)}} &
     \textcolor{white}{\textbf{Desv.\ Est.\ (\$)}} \\
     \midrule
-    1 --- Escalabilidad Media    & 100 & 143{,}721 & 143{,}177 & 0.38 & 100.0 & --- \\
+    1 --- Escalabilidad Media    & 100 & 143{,}721 & 143{,}177 & 0.38 & 100.0 & 246 \\
     \rowcolor{gray!8}
-    2 --- Alta Escalabilidad     & 200 & 294{,}349 & 293{,}541 & 0.27 & 100.0 & --- \\
-    3 --- Variabilidad Económica & 100 & 135{,}771 & 135{,}321 & 0.33 & 100.0 & --- \\
+    2 --- Alta Escalabilidad     & 200 & 294{,}349 & 293{,}541 & 0.27 & 100.0 & 438 \\
+    3 --- Variabilidad Económica & 100 & 135{,}771 & 135{,}321 & 0.33 & 100.0 & 196 \\
     \rowcolor{gray!8}
-    4 --- Estrés: Penalizaciones & 100 & 109{,}465 & 108{,}090 & 1.26 & 93.3  & --- \\
-    5 --- Estrés: Cap.\ Ampliada & 100 & 156{,}445 & 156{,}184 & 0.17 & 100.0 & --- \\
+    4 --- Estrés: Penalizaciones & 100 & 109{,}465 & 108{,}090 & 1.26 & 93.3  & 657 \\
+    5 --- Estrés: Cap.\ Ampliada & 100 & 156{,}445 & 156{,}184 & 0.17 & 100.0 & 150 \\
     \bottomrule
 \end{tabular}%
 }
@@ -461,7 +473,7 @@ La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escen
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Figures/fig07_escalabilidad.png}
-    \caption{Comparación de escalabilidad: 100~vs.\ 200~clientes. Las barras de error representan $\pm 1$ desviación estándar sobre las 30~ejecuciones.}
+    \caption{Curvas de convergencia: Escenario~1 (100~clientes) vs.\ Escenario~2 (200~clientes). Las bandas sombreadas representan $\pm 1$ desviación estándar sobre las 30~ejecuciones. La línea vertical punteada marca la generación mediana de convergencia del Escenario~1.}
     \label{fig:scalability}
 \end{figure}
 
@@ -471,6 +483,8 @@ La Figura~\ref{fig:routes} visualiza la mejor solución encontrada para el Escen
 \subsection{Degradación por Escalabilidad}
 
 Al incrementar la dimensionalidad de 100 a 200~clientes (Escenarios~1 vs.~2), el espacio de búsqueda crece factorialmente ($n!$ permutaciones posibles). Sin embargo, los resultados muestran que el AG mantuvo un gap bajo (0.27\%) incluso con 200~clientes, lo que sugiere que la decodificación basada en capacidad actúa como mecanismo natural de particionamiento que facilita la convergencia. El fitness absoluto del Escenario~2 es mayor simplemente por tener el doble de clientes generando ingresos; el gap relativo confirma que la calidad se mantiene estable ante el incremento de escala.
+
+En el Escenario~1 (100~clientes), el AG alcanzó el 99\% de su fitness final en la generación~99 (mediana), mientras que el Escenario~2 (200~clientes) requirió la generación~101. El fitness promedio en la generación~50 representó el 98.2\% del valor final para el Escenario~1 (\$140{,}580 vs.\ \$143{,}177) y el 98.5\% para el Escenario~2 (\$289{,}034 vs.\ \$293{,}541), confirmando que la velocidad de convergencia se mantiene comparable a pesar del aumento en dimensionalidad (véase Figura~\ref{fig:scalability}). La desviación estándar del Escenario~2 (\$438) es mayor que la del Escenario~1 (\$246), lo cual refleja la mayor variabilidad inherente al espacio de búsqueda ampliado.
 
 \subsection{Impacto de las Penalizaciones}
 
@@ -486,6 +500,51 @@ La comparación entre los Escenarios~4 y~5 revela el impacto directo de la estru
 \subsection{Variabilidad Económica}
 
 El Escenario~3 (mercado premium) genera un fitness absoluto menor (\$135{,}771) que el base (\$143{,}721) pese a tener mayores ingresos unitarios, debido a que la demanda reducida ($\in[1,8]$) produce menores ingresos totales por cliente. No obstante, el gap (0.33\%) y la tasa de éxito (100\%) confirman que el AG converge consistentemente ante esta estructura económica alternativa.
+
+\subsection{Estructura de las Rutas por Escenario}
+
+El análisis de la estructura de las rutas generadas por el AG revela el impacto directo de los parámetros de capacidad y penalización sobre la organización logística de las soluciones. La Tabla~\ref{tab:route_structure} presenta las métricas promedio de estructura de rutas calculadas sobre las 30~ejecuciones de cada escenario.
+
+\begin{table}[H]
+\centering
+\caption{Estructura promedio de rutas por escenario (mejor solución de cada ejecución, 30~ejecuciones).}
+\label{tab:route_structure}
+\renewcommand{\arraystretch}{1.3}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
+    \toprule
+    \rowcolor{tablehead}
+    \textcolor{white}{\textbf{Escenario}} &
+    \textcolor{white}{\textbf{Vehículos}} &
+    \textcolor{white}{\textbf{Clientes/ruta}} &
+    \textcolor{white}{\textbf{Carga/veh.\ (\%)}} &
+    \textcolor{white}{\textbf{Dist.\ total}} &
+    \textcolor{white}{\textbf{Cap.\ vacía}} \\
+    \midrule
+    1 --- Escalabilidad Media    & 36.1 & 2.8 & 92.7 & 4{,}043 & 79  \\
+    \rowcolor{gray!8}
+    2 --- Alta Escalabilidad     & 72.3 & 2.8 & 91.8 & 8{,}585 & 178 \\
+    3 --- Variabilidad Económica & 15.0 & 6.7 & 92.9 & 2{,}720 & 32  \\
+    \rowcolor{gray!8}
+    4 --- Estrés: Penalizaciones & 55.3 & 1.8 & 90.7 & 5{,}112 & 104 \\
+    5 --- Estrés: Cap.\ Ampliada & 21.2 & 4.7 & 94.7 & 3{,}223 & 57  \\
+    \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+El Escenario~4 ($Q=20$, costos altos) requiere en promedio 55.3~vehículos frente a los 36.1 del Escenario~1 base ($Q=30$), un incremento del 53\%. La capacidad reducida fragmenta las rutas (1.8~clientes/ruta vs.\ 2.8) y genera 104~unidades de capacidad vacía acumulada, reduciendo la utilización de carga al 90.7\%. La distancia total se incrementa a 5{,}112 unidades (+26\% respecto al base), ya que más vehículos implican más viajes de ida y vuelta al depósito (véase Tabla~\ref{tab:route_structure}).
+
+En contraste, el Escenario~5 ($Q=50$, costos bajos) consolida la distribución en solo 21.2~vehículos promedio, alcanzando la mayor utilización de capacidad de todos los escenarios (94.7\%) con 4.7~clientes por ruta. La distancia total se reduce a 3{,}223 unidades, un 20\% menos que el escenario base, gracias a la menor cantidad de viajes al depósito.
+
+El Escenario~3 (demanda baja, valor alto) presenta la estructura más compacta: 15.0~vehículos con 6.7~clientes por ruta y solo 32~unidades de capacidad vacía. La baja demanda individual ($\in [1,8]$) permite agrupar muchos más clientes por vehículo sin exceder $Q=30$, minimizando tanto la flota como la distancia total (2{,}720).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Figures/fig08_estructura_rutas.png}
+    \caption{Estructura comparativa de rutas: número de vehículos, utilización de capacidad y distancia total por escenario. Los valores representan la media sobre las 30~ejecuciones independientes.}
+    \label{fig:route_structure}
+\end{figure}
 
 \subsection{Importancia de las 30~Ejecuciones}
 
