@@ -3,10 +3,10 @@
 % --- 1. CONFIGURACIÓN DE IDIOMA Y CARACTERES ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{mathpazo}          % Palatino para texto y matemáticas
+\usepackage{microtype}         % Must load BEFORE babel to avoid \showhyphens conflict
 \usepackage[spanish, es-nodecimaldot, es-noquoting, es-noshorthands]{babel}
 \usepackage{csquotes}
-\usepackage{mathpazo}          % Palatino para texto y matemáticas
-\usepackage{microtype}
 
 % --- 2. GEOMETRÍA ---
 \usepackage[margin=2.5cm, headheight=14pt]{geometry}
@@ -518,6 +518,8 @@ Los resultados del experimento computacional confirman la viabilidad del Algorit
 \vspace{1.5em}
 {\color{uacjgray}\hrule}
 \vspace{1em}
+
+\newpage
 
 % ==========================================================
 % REFERENCIAS — doble columna
