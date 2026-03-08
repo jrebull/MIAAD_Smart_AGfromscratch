@@ -1,0 +1,151 @@
+scenario,run,best_fitness,generations,num_clients,seed
+Escenario 1 — Escalabilidad Media,0,142857.68897951872,300,100,0
+Escenario 1 — Escalabilidad Media,1,143721.3783230213,300,100,1
+Escenario 1 — Escalabilidad Media,2,143246.50386978572,300,100,2
+Escenario 1 — Escalabilidad Media,3,143270.54905380023,300,100,3
+Escenario 1 — Escalabilidad Media,4,143426.41509970016,300,100,4
+Escenario 1 — Escalabilidad Media,5,142753.06342142247,300,100,5
+Escenario 1 — Escalabilidad Media,6,143272.22111363176,300,100,6
+Escenario 1 — Escalabilidad Media,7,142930.55141964738,300,100,7
+Escenario 1 — Escalabilidad Media,8,143299.83745345534,300,100,8
+Escenario 1 — Escalabilidad Media,9,143443.05555681235,300,100,9
+Escenario 1 — Escalabilidad Media,10,143333.94962575153,300,100,10
+Escenario 1 — Escalabilidad Media,11,143342.1932847135,300,100,11
+Escenario 1 — Escalabilidad Media,12,143071.83590638931,300,100,12
+Escenario 1 — Escalabilidad Media,13,143327.72930897752,300,100,13
+Escenario 1 — Escalabilidad Media,14,143275.61027878156,300,100,14
+Escenario 1 — Escalabilidad Media,15,143366.60928168427,300,100,15
+Escenario 1 — Escalabilidad Media,16,143167.83382370762,300,100,16
+Escenario 1 — Escalabilidad Media,17,142932.02899773492,300,100,17
+Escenario 1 — Escalabilidad Media,18,142948.88248640456,300,100,18
+Escenario 1 — Escalabilidad Media,19,142791.28725450017,300,100,19
+Escenario 1 — Escalabilidad Media,20,142886.84217045747,300,100,20
+Escenario 1 — Escalabilidad Media,21,143679.03881263232,300,100,21
+Escenario 1 — Escalabilidad Media,22,143022.66012461687,300,100,22
+Escenario 1 — Escalabilidad Media,23,143227.6866763829,300,100,23
+Escenario 1 — Escalabilidad Media,24,143235.30331526158,300,100,24
+Escenario 1 — Escalabilidad Media,25,143454.4134119046,300,100,25
+Escenario 1 — Escalabilidad Media,26,143099.6505918897,300,100,26
+Escenario 1 — Escalabilidad Media,27,143091.44656622558,300,100,27
+Escenario 1 — Escalabilidad Media,28,143021.4180015443,300,100,28
+Escenario 1 — Escalabilidad Media,29,142806.6408083723,300,100,29
+Escenario 2 — Alta Escalabilidad,0,293190.70753877185,300,200,0
+Escenario 2 — Alta Escalabilidad,1,294348.94682832685,300,200,1
+Escenario 2 — Alta Escalabilidad,2,293973.7948211243,300,200,2
+Escenario 2 — Alta Escalabilidad,3,293614.0253862358,300,200,3
+Escenario 2 — Alta Escalabilidad,4,293299.2658169861,300,200,4
+Escenario 2 — Alta Escalabilidad,5,293357.56452233694,300,200,5
+Escenario 2 — Alta Escalabilidad,6,293622.96641113673,300,200,6
+Escenario 2 — Alta Escalabilidad,7,293704.68427421135,300,200,7
+Escenario 2 — Alta Escalabilidad,8,293846.470677299,300,200,8
+Escenario 2 — Alta Escalabilidad,9,293318.6507418255,300,200,9
+Escenario 2 — Alta Escalabilidad,10,293774.32931857475,300,200,10
+Escenario 2 — Alta Escalabilidad,11,294131.53290629067,300,200,11
+Escenario 2 — Alta Escalabilidad,12,293710.03734353953,300,200,12
+Escenario 2 — Alta Escalabilidad,13,294085.7215366234,300,200,13
+Escenario 2 — Alta Escalabilidad,14,292937.50221799454,300,200,14
+Escenario 2 — Alta Escalabilidad,15,293461.68333114067,300,200,15
+Escenario 2 — Alta Escalabilidad,16,294052.2439795832,300,200,16
+Escenario 2 — Alta Escalabilidad,17,293261.9841372893,300,200,17
+Escenario 2 — Alta Escalabilidad,18,294030.99166577175,300,200,18
+Escenario 2 — Alta Escalabilidad,19,292915.1173723936,300,200,19
+Escenario 2 — Alta Escalabilidad,20,292977.2656505023,300,200,20
+Escenario 2 — Alta Escalabilidad,21,293178.22734976065,300,200,21
+Escenario 2 — Alta Escalabilidad,22,292692.2250565544,300,200,22
+Escenario 2 — Alta Escalabilidad,23,293745.0695496017,300,200,23
+Escenario 2 — Alta Escalabilidad,24,292736.02305566176,300,200,24
+Escenario 2 — Alta Escalabilidad,25,293740.3680371553,300,200,25
+Escenario 2 — Alta Escalabilidad,26,293868.6083670945,300,200,26
+Escenario 2 — Alta Escalabilidad,27,293725.2904112289,300,200,27
+Escenario 2 — Alta Escalabilidad,28,293908.540214075,300,200,28
+Escenario 2 — Alta Escalabilidad,29,293018.070535242,300,200,29
+Escenario 3 — Variabilidad Económica,0,134935.86745898388,300,100,0
+Escenario 3 — Variabilidad Económica,1,135348.80538660966,300,100,1
+Escenario 3 — Variabilidad Económica,2,135356.32926865027,300,100,2
+Escenario 3 — Variabilidad Económica,3,135437.87458339237,300,100,3
+Escenario 3 — Variabilidad Económica,4,135460.7657622205,300,100,4
+Escenario 3 — Variabilidad Económica,5,135240.30955852196,300,100,5
+Escenario 3 — Variabilidad Económica,6,135394.25827212617,300,100,6
+Escenario 3 — Variabilidad Económica,7,135312.34035081163,300,100,7
+Escenario 3 — Variabilidad Económica,8,135196.25456181561,300,100,8
+Escenario 3 — Variabilidad Económica,9,135197.64737344114,300,100,9
+Escenario 3 — Variabilidad Económica,10,134983.91225945827,300,100,10
+Escenario 3 — Variabilidad Económica,11,135431.07129396196,300,100,11
+Escenario 3 — Variabilidad Económica,12,135770.7306565591,300,100,12
+Escenario 3 — Variabilidad Económica,13,135398.7417602272,300,100,13
+Escenario 3 — Variabilidad Económica,14,135375.13439636125,300,100,14
+Escenario 3 — Variabilidad Económica,15,135157.68113788703,300,100,15
+Escenario 3 — Variabilidad Económica,16,135373.00874795747,300,100,16
+Escenario 3 — Variabilidad Económica,17,134982.99536184652,300,100,17
+Escenario 3 — Variabilidad Económica,18,135372.1316066274,300,100,18
+Escenario 3 — Variabilidad Económica,19,135400.1845254648,300,100,19
+Escenario 3 — Variabilidad Económica,20,135202.3035041981,300,100,20
+Escenario 3 — Variabilidad Económica,21,135219.19476300653,300,100,21
+Escenario 3 — Variabilidad Económica,22,134912.4242938679,300,100,22
+Escenario 3 — Variabilidad Económica,23,135580.2485159919,300,100,23
+Escenario 3 — Variabilidad Económica,24,135290.75924394152,300,100,24
+Escenario 3 — Variabilidad Económica,25,135586.78512469915,300,100,25
+Escenario 3 — Variabilidad Económica,26,135309.6427226509,300,100,26
+Escenario 3 — Variabilidad Económica,27,135439.4643531285,300,100,27
+Escenario 3 — Variabilidad Económica,28,135354.32065200276,300,100,28
+Escenario 3 — Variabilidad Económica,29,135617.9257813245,300,100,29
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,0,107661.39845633684,300,100,0
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,1,108295.21516975187,300,100,1
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,2,108142.35334249353,300,100,2
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,3,107353.48211736183,300,100,3
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,4,108237.74154734539,300,100,4
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,5,107484.07476112997,300,100,5
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,6,108161.94377119957,300,100,6
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,7,109338.94600104542,300,100,7
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,8,107466.78285022592,300,100,8
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,9,107661.41473700988,300,100,9
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,10,107545.51137331437,300,100,10
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,11,108013.30526872001,300,100,11
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,12,108079.50565271251,300,100,12
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,13,109465.44702829958,300,100,13
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,14,109110.59351854023,300,100,14
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,15,108109.09326451288,300,100,15
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,16,108647.13079081886,300,100,16
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,17,107519.85898270545,300,100,17
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,18,107823.93899684507,300,100,18
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,19,108064.1490506427,300,100,19
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,20,107966.29574058446,300,100,20
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,21,107078.34188904465,300,100,21
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,22,108067.3161032355,300,100,22
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,23,108531.04868725943,300,100,23
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,24,106660.01211134766,300,100,24
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,25,109138.72513488335,300,100,25
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,26,108675.28487986489,300,100,26
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,27,107700.18794084604,300,100,27
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,28,107749.84935130685,300,100,28
+Escenario 4 — Estrés Operativo: Penalizaciones Altas,29,108938.39701409794,300,100,29
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,0,155922.73818997067,300,100,0
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,1,156139.46808469188,300,100,1
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,2,156278.95539803363,300,100,2
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,3,156130.3283023104,300,100,3
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,4,156339.15155434553,300,100,4
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,5,156305.35011131997,300,100,5
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,6,156148.71861372175,300,100,6
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,7,156225.00567356855,300,100,7
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,8,156088.85134801653,300,100,8
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,9,156318.52596513508,300,100,9
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,10,156336.23758605108,300,100,10
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,11,156072.47776926632,300,100,11
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,12,156086.59312775297,300,100,12
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,13,156294.15980706416,300,100,13
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,14,155788.9614481521,300,100,14
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,15,156230.7633037079,300,100,15
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,16,156198.59060890833,300,100,16
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,17,156378.72567217736,300,100,17
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,18,155995.3309091381,300,100,18
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,19,156322.80765195435,300,100,19
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,20,156314.10400607245,300,100,20
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,21,156329.90528109763,300,100,21
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,22,156200.53356533614,300,100,22
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,23,156445.46180993674,300,100,23
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,24,156204.9046261664,300,100,24
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,25,156073.0893258409,300,100,25
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,26,156168.1348916928,300,100,26
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,27,155938.24899521464,300,100,27
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,28,156232.48817040247,300,100,28
+Escenario 5 — Estrés Operativo: Capacidad Ampliada,29,156011.98984594666,300,100,29

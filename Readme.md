@@ -1,63 +1,105 @@
-Materia: Optimización Inteligente
-Profesor: Mtro. Raul Gibran Porras Alaniz
+# Genetic Algorithm from Scratch for the Vehicle Routing Problem (VRP)
 
-Universidad: Universidad Autónoma de Ciudad Juárez (UACJ)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![License](https://img.shields.io/badge/License-Academic-green)
 
-Maestria: Maestría en Inteligencia Artificial y Analítica de Datos (MIAAD)
+A complete implementation of a Genetic Algorithm (GA) to solve the Capacitated Vehicle Routing Problem (CVRP), built from scratch without optimization libraries. The project includes experimental evaluation across 5 scenarios, statistical metrics, automated figure generation, and an interactive Streamlit dashboard.
 
-Actividad: Análisis de Rendimiento de un Algoritmo Genético para el VRP
+## Problem Description
 
-Fecha de Entrega: 08 de marzo de 2026
+The **Capacitated Vehicle Routing Problem (CVRP)** seeks to design optimal delivery routes from a single depot to *n* geographically dispersed customers using a homogeneous fleet of vehicles with capacity *Q*. This implementation maximizes **net profit Z**:
 
-Matricula de Alumno: 263483
-Alumno: Javier Augusto Rebull Saucedo
+```
+Z = Sum(Di x Vi) - [(N_veh x C_veh) + (Dist_total x C_dist) + (Empty_total x C_empty)]
+```
 
+The GA uses **permutation-based chromosomes**, **OX1 crossover** (Davis, 1985), **swap mutation**, **tournament selection** (k=3), and **elitism**.
 
-Objetivo de la Práctica:
-El objetivo de esta actividad es que comprendan la mecánica interna de las metaheurísticas evolutivas y analicen su comportamiento ante diferentes escenarios de un mismo problema. Comprobarán cómo un modelo de optimización general y bien estructurado puede adaptarse y resolver diversas instancias operativas únicamente ajustando las características y parámetros del problema.
+## Project Structure
 
-🛠️ Fase 1: Replicación del Modelo Base
-En la sección de Recursos de esta semana, encontrarán un archivo llamado AGfromscratch.html
+```
+AGfromscratch/
+├── data/                         # Generated VRP instance JSON files
+├── results/                      # CSV outputs from experiments
+├── Figures/                      # Matplotlib/seaborn figures (300 DPI)
+├── src/
+│   ├── __init__.py
+│   ├── config.py                 # Dataclasses for scenario configuration
+│   ├── instance_generator.py     # VRP instance generator (OOP)
+│   ├── ga_engine.py              # Genetic Algorithm engine (OOP)
+│   ├── experiment_runner.py      # Orchestrates 30 runs per scenario
+│   ├── metrics.py                # BKS, Avg, Gap, SuccessRate computations
+│   └── figure_generator.py       # All matplotlib figures for LaTeX
+├── app/
+│   └── streamlit_app.py          # Interactive Streamlit dashboard
+├── generador_instancias.py       # CLI wrapper for instance generation
+├── ag_vrp.py                     # CLI wrapper for GA execution
+├── run_experiments.py            # Entry point: runs all 5 scenarios
+├── requirements.txt
+├── README.md
+└── report/
+    └── reporte_vrp_ag.tex        # LaTeX technical report (Spanish)
+```
 
-Nota importante: Deben descargar este archivo a sus computadoras y abrirlo directamente con su navegador web (Chrome, Edge, Safari, etc.) para que las ecuaciones matemáticas y el formato de código (estilo IDE) se visualicen de manera correcta.
+## Installation
 
-Basándose en la explicación detallada de ese documento, deberán replicar el modelo en Python creando dos scripts separados:
+```bash
+git clone https://github.com/jrebull/MIAAD_Smart_AGfromscratch
+cd AGfromscratch
+python3 -m venv .venv
+source .venv/bin/activate   # macOS/Linux
+pip install -r requirements.txt
+```
 
-generador_instancias.py: Para crear los escenarios de prueba.
+## Usage
 
-ag_vrp.py: El motor de la metaheurística.
+```bash
+# Generate a single instance
+python generador_instancias.py --clients 100 --seed 42
 
-🔬 Fase 2: Experimentación y Escenarios de Prueba
-Una vez que su algoritmo base funcione correctamente, diseñarán un experimento computacional. Deberán someter a su Algoritmo Genético a las siguientes pruebas de estrés y escalabilidad:
+# Run a single GA execution
+python ag_vrp.py --instance data/instance.json --generations 300
 
-Escenario 1 (Escalabilidad Media): Generar una instancia con 100 clientes.
+# Generate instances only
+python run_experiments.py --generate-only
 
-Escenario 2 (Alta Escalabilidad): Generar una instancia con 200 clientes.
+# Run full experiment (5 scenarios x 30 runs = 150 GA executions)
+python run_experiments.py --full
 
-Escenario 3 (Variabilidad Económica): Modificar los rangos aleatorios de "Demanda" y "Valor por unidad" en el generador de instancias para simular un mercado diferente.
+# Generate figures only (requires results)
+python run_experiments.py --figures-only
 
-Escenario 4 y 5 (Estrés Operativo): Realizar dos pruebas adicionales donde modifiquen los parámetros de penalización (costo de vehículo, costo por km, penalización por espacio vacío) y la capacidad máxima de los vehículos.
+# Launch Streamlit dashboard
+streamlit run app/streamlit_app.py
+```
 
-📊 Fase 3: Metodología de Ejecución y Métricas
-Dado el carácter estocástico (aleatorio) de los Algoritmos Genéticos, una sola ejecución no tiene validez estadística. Por lo tanto, para cada uno de los escenarios planteados, deberán ejecutar el algoritmo 30 veces de manera independiente.
+## Experimental Scenarios
 
-Para cada escenario, deberán registrar y calcular las siguientes métricas de rendimiento:
+| Scenario | Clients | Capacity | Vehicle Cost | Distance Cost | Empty Cost |
+|----------|---------|----------|-------------|---------------|------------|
+| 1 — Medium Scale | 100 | 30 | $300 | $2 | $10 |
+| 2 — High Scale | 200 | 30 | $300 | $2 | $10 |
+| 3 — Economic Variability | 100 | 30 | $300 | $2 | $10 |
+| 4 — High Penalties | 100 | 20 | $500 | $5 | $15 |
+| 5 — Expanded Capacity | 100 | 50 | $150 | $1 | $5 |
 
-Mejor Ganancia (Best Fitness): El valor de la función objetivo (Z) más alto encontrado en las 30 ejecuciones. Este fungirá como su "Óptimo Conocido" o "Best Known Solution" (BKS) para esa instancia.
+## Results
 
-Promedio de la Mejor Ganancia (Average Best Fitness): La media aritmética de los mejores resultados obtenidos en las 30 ejecuciones.
+Results are saved to `./results/results_summary.csv` with columns: `scenario, run, best_fitness, generations, num_clients, seed`.
 
-Brecha (Gap): La diferencia porcentual promedio entre los resultados obtenidos y su Óptimo Conocido.
+Metrics computed per scenario:
+- **BKS** (Best Known Solution): Maximum fitness across 30 runs
+- **Average Best Fitness**: Mean of best-per-run values
+- **Gap (%)**: Percentage difference from BKS
+- **Success Rate (%)**: Percentage of runs within 2% of BKS
 
-Tasa de Éxito (Success Rate): El porcentaje de veces (de las 30 ejecuciones) que el algoritmo logró encontrar o acercarse al Óptimo Conocido (pueden definir un margen de tolerancia del 1% o 2%).
+## Academic Context
 
-📝 Entregable
-Deberán subir a la plataforma un Reporte Técnico en formato PDF que contenga:
+- **Program:** Maestria en Inteligencia Artificial y Analitica de Datos (MIAAD)
+- **University:** Universidad Autonoma de Ciudad Juarez (UACJ)
+- **Course:** Optimizacion Inteligente
+- **Professor:** Mtro. Raul Gibran Porras Alaniz
 
-Una breve introducción al problema.
+## Author
 
-El diseño de sus experimentos (qué valores exactos utilizaron para los escenarios 3, 4 y 5).
-
-Tablas comparativas con las 4 métricas de rendimiento exigidas para cada escenario.
-
-Hallazgos y Conclusiones: Un análisis crítico sobre cómo se degradó o mantuvo el rendimiento del algoritmo al aumentar la dimensionalidad (100 vs 200 clientes) y cómo los cambios en las penalizaciones afectaron la estructura de las rutas generadas.
+**Javier Augusto Rebull Saucedo** — Matricula 263483
